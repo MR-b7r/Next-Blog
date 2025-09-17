@@ -11,32 +11,22 @@ import { UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import SignoutUser from "./SignoutUser";
-import { auth } from "@/lib/auth";
-import { userSignIn } from "@/lib/actions/user.actions";
-// import { SessionProvider, useSession } from "next-auth/react";
 
 const HeaderProfile = ({ currentUser }) => {
-  // const session = await auth();
-  // let currentUser;
-  // if (session) {
-  //   currentUser = await userSignIn(session?.user, true);
-  // }
-  // console.log(currentUser);
   return (
-    <div className="flex gap-2 ">
+    <div className="flex gap-2">
       <ThemeSwitcher />
 
       {currentUser ? (
         <DropdownMenu>
           <DropdownMenuTrigger>
             {currentUser?.profilePicture ? (
-              <img
-                src={currentUser.profilePicture}
-                width={40}
-                height={40}
-                alt="profile"
-                className="rounded-full"
-              />
+              <div className="flex items-center justify-center">
+                <img
+                  src={currentUser?.profilePicture}
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+              </div>
             ) : (
               "Profile"
             )}

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { DataTable } from "./table/DataTable";
-import { columns } from "./table/columns";
+import { DataTable } from "../table/DataTable";
+import { columns } from "../table/columns";
 import { getPosts } from "@/lib/actions/post.actions";
 import { postPerPage } from "@/lib/constants";
 

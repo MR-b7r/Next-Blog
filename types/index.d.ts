@@ -14,6 +14,8 @@ declare type User = {
   password: string;
   profilePicture: string;
   isAdmin: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
 declare type Post = {
   _id: string;

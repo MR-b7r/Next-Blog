@@ -1,8 +1,16 @@
+"use client";
 import Link from "next/link";
 import React from "react";
-import { Button } from "./ui/button";
-import CommentSection from "./CommentSection";
-const Post = ({ post }: { post: Post }) => {
+import { Button } from "../ui/button";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import Border from "../Border";
+const Post = ({
+  post,
+  mdxSource,
+}: {
+  post: Post;
+  mdxSource: MDXRemoteSerializeResult;
+}) => {
   return (
     <>
       <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl text-gray-900 dark:text-gray-200">
@@ -33,10 +41,11 @@ const Post = ({ post }: { post: Post }) => {
           {post && (post.content.length / 1000).toFixed(0)} mins read
         </span>
       </div>
-      <div
-        className="p-3 max-w-2xl mx-auto w-full post-content"
-        dangerouslySetInnerHTML={{ __html: post && post.content }}
-      ></div>
+      <div className="p-3 max-w-2xl mx-auto w-full post-content">
+        <MDXRemote {...mdxSource} />
+      </div>
+
+      <Border text="Comments" />
     </>
   );
 };

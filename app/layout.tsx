@@ -23,9 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={(cn("bg-primary-50 dark:bg-gray-900"), poppins.variable)}
-      >
+      <body className={(cn("grainy-light dark:bg-dark-300"), poppins.variable)}>
         <Toaster
           position="top-center"
           gutter={10}

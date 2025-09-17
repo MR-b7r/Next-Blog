@@ -9,7 +9,7 @@ export default async function RootLayout({
   return (
     <div className="flex h-screen flex-col">
       <Header />
-      <main className="flex-1 dark:bg-gray-900">
+      <main className="flex-1 dark:bg-dark-300">
         {children} <Footer />
       </main>
     </div>

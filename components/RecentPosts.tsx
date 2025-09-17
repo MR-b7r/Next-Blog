@@ -1,6 +1,6 @@
 import { getPosts } from "@/lib/actions/post.actions";
 import React from "react";
-import PostCard from "./PostCard";
+import PostCard from "./post/PostCard";
 
 const RecentPosts = async ({ pageNumber }: { pageNumber?: number }) => {
   const { recentPosts } = await getPosts();

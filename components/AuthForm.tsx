@@ -1,6 +1,6 @@
 "use client";
 
-import { authFormSchema, handleError } from "@/lib/utils";
+import { authFormSchema } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -12,13 +12,6 @@ import CustomForm from "./CustomForm";
 import { Loader2 } from "lucide-react";
 import { userSignIn, userSignUp } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
-// import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-// import {
-//   signEnd,
-//   signFailure,
-//   signStart,
-//   signSuccess,
-// } from "@/lib/features/user/userSlice";
 
 import OAuth from "./OAuth";
 import toast from "react-hot-toast";
@@ -32,10 +25,6 @@ export enum FormFieldType {
 }
 
 const AuthForm = ({ type }: { type: string }) => {
-  // const dispatch = useAppDispatch();
-  // const { loading, error: errorMessage } = useAppSelector(
-  // (state) => state.user
-  // );
   const [user, setUser] = useState(null);
   const router = useRouter();
   const formSchema = authFormSchema(type);
@@ -67,7 +56,6 @@ const AuthForm = ({ type }: { type: string }) => {
           password: data.password,
         });
         if (response) toast.success("A new Account created successfully");
-        // dispatch(signSuccess(response));
         if (response) router.push("/");
       }
       // Sign In
@@ -80,14 +68,10 @@ const AuthForm = ({ type }: { type: string }) => {
         if (!response)
           toast.error("cannot get the user. Email or Password is incorrect");
 
-        // dispatch(signSuccess(response));
         if (response) router.push("/");
       }
     } catch (error: any) {
-      // dispatch(signFailure(error.message));
       toast.error(error.message);
-    } finally {
-      // dispatch(signEnd());
     }
   };
   return (
@@ -138,7 +122,6 @@ const AuthForm = ({ type }: { type: string }) => {
               />
               <div className="flex flex-col gap-4 ">
                 <Button
-                  // disabled={loading}
                   type="submit"
                   className="text-16 rounded-lg  logo-gradient font-semibold text-white"
                 >

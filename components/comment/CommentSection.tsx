@@ -3,21 +3,21 @@ import { commentschema } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form } from "./ui/form";
-import CustomForm from "./CustomForm";
-import { Button } from "./ui/button";
+import { Form } from "../ui/form";
+import CustomForm from "../CustomForm";
+import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
-import { FormFieldType } from "./AuthForm";
+import { FormFieldType } from "../AuthForm";
 import toast from "react-hot-toast";
 import { createComment } from "@/lib/actions/comment.actions";
 
 const CommentSection = ({ postId, currentUser }: { postId: string }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const formSchema = commentschema();
-  // 1. Define the form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -25,37 +25,39 @@ const CommentSection = ({ postId, currentUser }: { postId: string }) => {
     },
   });
 
-  // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      setIsLoading(true);
       if (!data.comment) return;
       const updateData = {
         userId: currentUser?._id!,
         postId,
         comment: data.comment,
       };
-      const createdComment = await createComment(updateData);
-      console.log(createdComment);
-      toast.success("Thanks, you have shared your thoughts about this blog!");
+      await createComment(updateData);
+      toast.success("Comment added successfully!");
+      router.refresh();
+      form.reset();
+      setIsLoading(false);
     } catch (error: any) {
       toast.error(`Error: ${error.message}`);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto w-full p-3">
+    <div className="max-w-2xl mx-auto w-full ">
       {currentUser ? (
         <>
-          <div className="flex items-center gap-1 my-5 text-gray-500 text-sm">
+          <div className="flex items-center gap-1 my-5 text-dark-300 dark:text-gray-100 text-sm">
             <p>Signed in as:</p>
             <img
-              className="h-5 w-5 object-cover rounded-full"
+              className="h-6 w-6 object-cover rounded-full"
               src={currentUser.profilePicture}
               alt="profile Photo"
             />
             <Link
-              href={"/dashboard?tab=profile"}
-              className="text-xs text-cyan-600 hover:underline"
+              href={"/dashboard"}
+              className="text-xs text-green-500 hover:underline"
             >
               @{currentUser.username}
             </Link>
@@ -73,15 +75,12 @@ const CommentSection = ({ postId, currentUser }: { postId: string }) => {
               />
 
               <div className="flex justify-between items-center gap-3">
-                <p className="text-gray-500 text-xs">
-                  200 characters remaining
-                </p>
                 <Button
-                  // disabled={loading}
+                  disabled={isLoading}
                   type="submit"
                   className="text-14 rounded-lg logo-gradient  text-white "
                 >
-                  {false ? (
+                  {isLoading ? (
                     <>
                       <Loader2 size={20} className="animate-spin" /> &nbsp;
                       Loading...
@@ -97,7 +96,7 @@ const CommentSection = ({ postId, currentUser }: { postId: string }) => {
       ) : (
         <div className="text-sm text-teal-500 my-5 flex gap-1">
           You must be signed in to comment.
-          <Link className="text-blue-500 hover:underline" href={"/sign-in"}>
+          <Link className="text-green-500 hover:underline" href={"/sign-in"}>
             Sign In
           </Link>
         </div>

@@ -7,6 +7,7 @@ import User from "@/models/user.model";
 import { handleError, parseStringify } from "../utils";
 import { auth, signIn, signOut } from "../auth";
 import { redirect } from "next/navigation";
+import { userPerPage } from "../constants";
 
 export const getLoggedIn = async (user: SignUpParams) => {
   try {
@@ -129,16 +130,19 @@ export const updateUser = async (user: User) => {
     handleError(error);
   }
 };
-export const deleteUser = async (user: User) => {
+export const deleteUser = async (userId: string) => {
   try {
-    // console.log(user);
+    // await User.findByIdAndDelete(userId);
 
-    // && user.isAdmin
-    if (user && user?._id) {
-      const deletedUser = await User.findByIdAndDelete(user._id!);
-      await signOut({ redirectTo: "/" });
-      // redirect("/");
-    }
+    const user = await User.findById(userId);
+    const session = await auth();
+
+    if (!user || !session) return console.error("cannot delete the user");
+
+    await User.findByIdAndDelete(userId);
+
+    if (session?.user?.email == user?.email) redirect("/");
+    return await signOut({ redirectTo: "/" });
   } catch (error) {
     handleError(error);
   }
@@ -152,6 +156,31 @@ export const getUserById = async (userId: string) => {
       return console.error("there an error getting the user. Please try again");
 
     return parseStringify(getUser);
+  } catch (error) {
+    handleError(error);
+  }
+};
+export const getUsers = async (pageNumber?: number) => {
+  try {
+    let allUsers = {};
+
+    await connectMongo();
+
+    if (pageNumber) {
+      const limit = pageNumber * userPerPage;
+      const startIndex = limit - userPerPage;
+      // const sortDirection = getPosts.order === "asc" ? 1 : -1;
+
+      const users = await User.find({})
+        .sort({ createdAt: -1 })
+        .skip(startIndex)
+        .limit(limit);
+      const totalUsers = await User.countDocuments();
+
+      allUsers = { ...allUsers, users, totalUsers };
+    }
+
+    return parseStringify(allUsers);
   } catch (error) {
     handleError(error);
   }

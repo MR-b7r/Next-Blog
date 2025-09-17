@@ -22,7 +22,6 @@ import toast from "react-hot-toast";
 const SearchFilter = () => {
   const pathName = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const formSchema = filterschema();
   // 1. Define the form.
@@ -48,30 +47,33 @@ const SearchFilter = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="px-3 py-5">
-        <div className="relative block md:hidden ">
-          <div className="absolute inset-y-0  flex items-center ps-3 pointer-events-none">
-            <MagnifyingGlassIcon
-              type="button"
-              className="w-4 h-4 text-gray-500 dark:text-gray-400"
+        <nav className="flex justify-between items-center ">
+          <div className="relative block ">
+            <div className="absolute inset-y-0  flex items-center ps-3 pointer-events-none">
+              <MagnifyingGlassIcon
+                type="button"
+                className="w-4 h-4 text-green-500"
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="searchTerm"
+              render={({ field }) => (
+                <FormControl>
+                  <Input
+                    type="text"
+                    className="block w-full p-2 ps-10 text-sm text-dark-400 border border-green-500 rounded-lg bg-gray-50 focus:ring-0 focus:border-green-500 outline-none dark:bg-dark-400 dark:border-gray-600 dark:placeholder-dark-400 dark:text-white dark:focus:ring-0 dark:focus:border-green-500"
+                    style={{ boxShadow: "none" }}
+                    placeholder="Search..."
+                    {...field}
+                  />
+                </FormControl>
+              )}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="searchTerm"
-            render={({ field }) => (
-              <FormControl>
-                <Input
-                  type="text"
-                  className="block w-full mb-3 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Search..."
-                  {...field}
-                />
-              </FormControl>
-            )}
-          />
-        </div>
-        <nav className="flex justify-between items-center ">
-          <h2 className="md:block hidden text-3xl font-bold">Search results</h2>
+          {/* <h2 className="md:block hidden text-dark-500 dark:text-gray-100 text-3xl font-bold">
+            Search results
+          </h2> */}
 
           <div className="flex items-center gap-2 flex-wrap">
             <ul className="flex flex-nowrap py-1">
@@ -95,21 +97,6 @@ const SearchFilter = () => {
                   </FormControl>
                 )}
               />
-              {/* <li className=" group px-3 py-2  hover:bg-gray-200 dark:hover:bg-gray-950 duration-200 rounded-md cursor-pointer">
-            <Link href={`#`} className="w-full">
-              <span className="text-gray-950 dark:text-gray-100 group-hover:text-blue-700 dark:group-hover:text-blue-600 duration-200 rounded-md">
-                Newest
-              </span>
-            </Link>
-          </li>
-
-          <li className="group px-3 py-2 hover:bg-gray-200 dark:hover:bg-gray-950 duration-200 rounded-md cursor-pointer">
-            <Link href={`#`} className="w-full">
-              <span className="text-gray-950 dark:text-gray-100 group-hover:text-blue-700 dark:group-hover:text-blue-600 duration-200 rounded-md">
-                Oldest
-              </span>
-            </Link>
-          </li> */}
             </ul>
 
             <ul className="flex flex-nowrap py-1 md:justify-end">
@@ -135,28 +122,6 @@ const SearchFilter = () => {
                   </FormControl>
                 )}
               />
-              {/* <li className="group px-3 py-2  hover:bg-gray-200 dark:hover:bg-gray-950 duration-200 rounded-md cursor-pointer">
-          <Link href={`#`} className="w-full">
-            <span className="text-gray-950 dark:text-gray-100 group-hover:text-blue-700 dark:group-hover:text-blue-600 duration-200 rounded-md">
-              Javascript
-            </span>
-          </Link>
-        </li>
-
-        <li className="group px-3 py-2 hover:bg-gray-200 dark:hover:bg-gray-950 duration-200 rounded-md cursor-pointer">
-          <Link href={`#`} className="w-full">
-            <span className="text-gray-950 dark:text-gray-100 group-hover:text-blue-700 dark:group-hover:text-blue-600 duration-200 rounded-md">
-              ReactJs
-            </span>
-          </Link>
-        </li>
-        <li className="group px-3 py-2 hover:bg-gray-200 dark:hover:bg-gray-950 duration-200 rounded-md cursor-pointer">
-          <Link href={`#`} className="w-full">
-            <span className="text-gray-950 dark:text-gray-100 group-hover:text-blue-700 dark:group-hover:text-blue-600 duration-200 rounded-md">
-              NextJs
-            </span>
-          </Link>
-        </li> */}
             </ul>
 
             <Button

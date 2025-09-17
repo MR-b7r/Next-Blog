@@ -1,4 +1,4 @@
-import { PostForm } from "@/components/PostForm";
+import { PostForm } from "@/components/post/PostForm";
 import { userSignIn } from "@/lib/actions/user.actions";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";

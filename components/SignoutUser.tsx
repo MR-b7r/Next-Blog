@@ -1,26 +1,26 @@
-import { userSignOut } from "@/lib/actions/user.actions";
-// import { signOutSuccess } from "@/lib/features/user/userSlice";
-// import { useAppDispatch } from "@/lib/hooks";
-import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
+"use client";
 import React from "react";
+import { userSignOut } from "@/lib/actions/user.actions";
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SignoutUser = ({ icon, style }: { icon?: boolean; style?: string }) => {
-  // const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleSignOut = async () => {
     try {
-      await userSignOut();
-      // dispatch(signOutSuccess());
+      const signout = await userSignOut();
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <>
+    <Link href="/" className="w-full">
       {icon ? (
-        <div className="flex items-center gap-1 w-full">
-          {/* onClick={handleSignOut} */}
+        <div className="flex items-center gap-1 w-full" onClick={handleSignOut}>
           <ArrowLeftEndOnRectangleIcon width={20} />
           <span className={style}>Sign out</span>
         </div>
@@ -29,7 +29,7 @@ const SignoutUser = ({ icon, style }: { icon?: boolean; style?: string }) => {
           Sign Out
         </span>
       )}
-    </>
+    </Link>
   );
 };
 

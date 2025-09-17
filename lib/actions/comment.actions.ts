@@ -48,7 +48,7 @@ export const likeComment = async (commentId: string) => {
     }
 
     console.log(comment);
-    // return parseStringify(comment);
+    return parseStringify(comment);
   } catch (error) {
     handleError(error);
   }

@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import Link from "next/link";
-import PostModal from "../PostModal";
+import PostModal from "../post/PostModal";
 import { Button } from "../ui/button";
 
 export const columns: ColumnDef<Post>[] = [
@@ -54,7 +54,7 @@ export const columns: ColumnDef<Post>[] = [
             variant="ghost"
             className={`capitalize text-blue-500 hover:text-blue-600 tracking-wide hover:bg-gray-200 dark:hover:bg-gray-800 `}
           >
-            <Link href={`/update-post/${post._id}`}>Edit</Link>
+            <Link href={`dashboard/update-post/${post._id}`}>Edit</Link>
           </Button>
           <PostModal
             postId={post._id}

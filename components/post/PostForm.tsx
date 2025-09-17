@@ -1,9 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import ReactQuill from "react-quill";
+
 import "react-quill/dist/quill.snow.css";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField } from "@/components/ui/form";
@@ -19,10 +23,10 @@ import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { postForm } from "@/lib/utils";
 import { createNewPost, getPost, updatePost } from "@/lib/actions/post.actions";
-import { FileUploader } from "./FileUploader";
-// import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { FileUploader } from "../FileUploader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 export function PostForm({
   type,
   postId,
@@ -33,7 +37,6 @@ export function PostForm({
   postId?: string;
   post?: Post;
 }) {
-  // const { currentUser } = useAppSelector((state) => state.user);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const formSchema = postForm();
@@ -58,7 +61,7 @@ export function PostForm({
         const newData = { ...data, userId, username };
         const newPost = await createNewPost(newData);
         toast.success(`Blug is created succesfully`);
-        router.push("/dashboard?tab=posts");
+        router.push("/dashboard/posts");
       }
       if (type === "edit") {
         setIsLoading(true);
@@ -72,7 +75,7 @@ export function PostForm({
         };
         const editPost = await updatePost(updateData);
         toast.success(`Blug is Edited succesfully`);
-        router.push("/dashboard?tab=posts");
+        router.push("/dashboard/posts");
       }
     } catch (error: any) {
       toast.error(`Something went wrong, make sure all fields are valid`);
@@ -130,11 +133,7 @@ export function PostForm({
             name="image"
             render={({ field }) => (
               <FormControl>
-                <FileUploader
-                  onFieldChange={field.onChange}
-                  type="post"
-                  imageUrl={field.value}
-                />
+                <FileUploader onFieldChange={field.onChange} />
               </FormControl>
             )}
           />
@@ -146,6 +145,14 @@ export function PostForm({
           render={({ field }) => (
             <FormControl>
               {/* <ReactQuill theme="snow" className="h-72 mb-12" {...field} /> */}
+              <div className="min-h-[300px]">
+                <MDEditor
+                  // value={field.value}
+                  // onChange={field.onChange}
+                  height={300}
+                  {...field}
+                />
+              </div>
             </FormControl>
           )}
         />

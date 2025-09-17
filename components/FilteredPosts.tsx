@@ -1,5 +1,5 @@
 import React from "react";
-import PostCard from "./PostCard";
+import PostCard from "./post/PostCard";
 import { getFilteredPosts } from "@/lib/actions/post.actions";
 import searchEmpty from "@/public/search-empty.svg";
 import Image from "next/image";
@@ -9,7 +9,7 @@ const FilteredPosts = async ({ filter }: { filter: searchFiterParams }) => {
   return (
     <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
       <div className="flex flex-col justify-center items-center mb-5">
-        <h1 className="text-3xl mt-5 font-semibold tracking-wide">
+        <h1 className="text-3xl mt-5 font-semibold tracking-wide text-dark-500 dark:text-gray-100 ">
           Blogs Results
         </h1>
         <div className="flex flex-wrap gap-5 mt-5 justify-center">

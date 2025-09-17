@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   Dialog,
@@ -10,18 +11,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
-import DeletePost from "./dialog/DeletePost";
+import DeleteUser from "./DeleteUser";
 
-const PostModal = ({
-  postId,
+const UserModal = ({
   userId,
-  post,
-  type,
+  username,
 }: {
-  postId: string;
   userId: string;
-  post: Post;
-  type: "edit" | "delete";
+  username: string;
 }) => {
   const [open, setOpen] = useState(false);
   return (
@@ -30,22 +27,21 @@ const PostModal = ({
         <DialogTrigger asChild>
           <Button
             variant={"ghost"}
-            className={`capitalize ${
-              type === "edit"
-                ? "text-blue-500 hover:text-blue-600"
-                : "text-red-500 hover:text-red-600"
-            } tracking-wide hover:bg-gray-200 dark:hover:bg-gray-800 `}
+            className={`capitalize 
+              "text-red-500 hover:text-red-600
+             tracking-wide hover:bg-gray-200 dark:hover:bg-gray-800 `}
           >
-            {type}
+            Delete
           </Button>
         </DialogTrigger>
         <DialogContent className="shad-dialog sm:max-w-md">
           <DialogHeader className="mb-4 space-y-3">
             <DialogTitle className="capitalize text-gray-900 dark:text-gray-100 flex items-center tracking-wide">
-              {type} Blug
+              Delete {username}
             </DialogTitle>
             <DialogDescription className="text-gray-800 dark:text-gray-200">
-              Please fill in the following details to {type} Blug
+              Are you sure you want to delete{" "}
+              <span className="text-red-500 font-bold">{username}</span> ?
             </DialogDescription>
           </DialogHeader>
 
@@ -59,9 +55,7 @@ const PostModal = ({
                 Cancel
               </Button>
             </DialogClose>
-            {type === "delete" && (
-              <DeletePost postId={postId} post={post} setOpen={setOpen} />
-            )}
+            <DeleteUser userId={userId} setOpen={setOpen} />
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -69,4 +63,4 @@ const PostModal = ({
   );
 };
 
-export default PostModal;
+export default UserModal;
