@@ -1,9 +1,12 @@
+"use client";
 import React, { useState } from "react";
 
 import { deleteUser } from "@/lib/actions/user.actions";
 import toast from "react-hot-toast";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { signOut } from "@/lib/auth";
 
 const DeleteUser = ({
   userId,
@@ -13,11 +16,13 @@ const DeleteUser = ({
   setOpen?: (open: boolean) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
   const handleDeleteUser = async () => {
     try {
       setIsLoading(true);
       await deleteUser(userId);
+
+      router.refresh();
       toast.success("Account has been deleted");
     } catch (error) {
       toast.error("Cannot delete the account");

@@ -22,7 +22,7 @@ export const columns: ColumnDef<Post>[] = [
       <img
         src={row.original.image}
         alt={row.original.title}
-        className="w-20 h-10 object-cover bg-gray-500"
+        className="w-20 h-10 object-cover"
       />
     ),
   },
@@ -31,7 +31,7 @@ export const columns: ColumnDef<Post>[] = [
     header: "Post Title",
     cell: ({ row }) => (
       <Link
-        className="font-medium text-gray-900 dark:text-white min-w-[115px] hover:bg-gray-200 dark:hover:bg-gray-800 duration-150 py-2 px-3 rounded-sm"
+        className="font-medium text-dark-500 dark:text-gray-100 min-w-[115px] hover:bg-green-200 dark:hover:bg-green-700  duration-150 py-2 px-3 rounded-sm"
         href={`/post/${row.original.slug}`}
       >
         {row.original.title}
@@ -41,7 +41,11 @@ export const columns: ColumnDef<Post>[] = [
   {
     accessorKey: "category",
     header: "Category",
-    cell: ({ row }) => <p className="">{row.original.category}</p>,
+    cell: ({ row }) => (
+      <p className="text-dark-500 dark:text-gray-100 ">
+        {row.original.category}
+      </p>
+    ),
   },
   {
     id: "actions",
@@ -49,12 +53,12 @@ export const columns: ColumnDef<Post>[] = [
     cell: ({ row }) => {
       const post = row.original;
       return (
-        <div className="flex md:gap-1 items-center ">
+        <div className="flex md:gap-1 items-center">
           <Button
             variant="ghost"
-            className={`capitalize text-blue-500 hover:text-blue-600 tracking-wide hover:bg-gray-200 dark:hover:bg-gray-800 `}
+            className={`capitalize text-green-500 hover:text-green-500 tracking-wide hover:bg-green-200 dark:hover:bg-green-700 `}
           >
-            <Link href={`dashboard/update-post/${post._id}`}>Edit</Link>
+            <Link href={`update-post/${post._id}`}>Edit</Link>
           </Button>
           <PostModal
             postId={post._id}

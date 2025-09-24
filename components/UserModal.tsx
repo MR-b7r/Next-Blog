@@ -28,8 +28,8 @@ const UserModal = ({
           <Button
             variant={"ghost"}
             className={`capitalize 
-              "text-red-500 hover:text-red-600
-             tracking-wide hover:bg-gray-200 dark:hover:bg-gray-800 `}
+              " text-red-500 hover:text-gray-100 
+             tracking-wide hover:bg-red-400 dark:hover:bg-red-800 `}
           >
             Delete
           </Button>

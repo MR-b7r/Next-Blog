@@ -12,7 +12,7 @@ export const columns: ColumnDef<User>[] = [
   {
     header: "Date created",
     cell: ({ row }) => (
-      <p className="text-14-medium ">
+      <p className="text-14-medium text-dark-500 dark:text-gray-100">
         {new Date(row.original.createdAt).toLocaleDateString()}
       </p>
     ),
@@ -24,7 +24,7 @@ export const columns: ColumnDef<User>[] = [
       <img
         src={row.original.profilePicture}
         alt={row.original.username}
-        className="w-10 h-10 object-cover bg-gray-500 rounded-full"
+        className="w-10 h-10 object-cover rounded-full"
       />
     ),
   },
@@ -32,7 +32,7 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "username",
     header: "Username",
     cell: ({ row }) => (
-      <p className="font-medium text-gray-900 dark:text-white min-w-[115px] hover:bg-gray-200 dark:hover:bg-gray-800 duration-150 py-2 px-3 rounded-sm">
+      <p className="font-medium text-dark-500 dark:text-gray-100 min-w-[115px] hover:bg-green-200 dark:hover:bg-green-700 duration-150 py-2 px-3 rounded-sm">
         {row.original.username}
       </p>
     ),
@@ -41,7 +41,7 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "email",
     header: "Email",
     cell: ({ row }) => (
-      <p className="font-medium text-gray-900 dark:text-white min-w-[115px] hover:bg-gray-200 dark:hover:bg-gray-800 duration-150 py-2 px-3 rounded-sm">
+      <p className="font-medium text-dark-500 dark:text-gray-100 min-w-[115px] hover:bg-green-200 dark:hover:bg-green-700 duration-150 py-2 px-3 rounded-sm">
         {row.original.email}
       </p>
     ),

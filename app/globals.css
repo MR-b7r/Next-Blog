@@ -104,6 +104,9 @@ body {
   .logo-gradient {
     @apply bg-gradient-to-r from-[#43b692] to-[#099773];
   }
+  .dash-header {
+    @apply my-7 text-center font-semibold text-3xl text-dark-500 dark:text-gray-100;
+  }
 
   /* TYPOGRAPHY */
   /* 64 */
@@ -222,7 +225,7 @@ body {
     @apply bg-grey-50 h-[54px] focus-visible:ring-offset-0 placeholder:text-grey-500 rounded-full p-regular-16 px-4 py-3 border-none focus-visible:ring-transparent !important;
   }
   .shad-input {
-    @apply rounded-lg border border-gray-300 text-gray-500 bg-gray-100 placeholder:text-gray-500 dark:text-white dark:border-gray-200 dark:placeholder:text-gray-300 dark:bg-gray-700 focus-visible:ring-offset-green-500 focus-visible:ring-0 !important;
+    @apply rounded-lg border border-gray-300 text-dark-400 bg-gray-100 placeholder:text-dark-500 dark:text-gray-100 dark:border-gray-200 dark:placeholder:text-gray-200 dark:bg-dark-400 focus-visible:ring-offset-green-500 focus-visible:ring-0 !important;
   }
   .button {
     @apply rounded-full h-[54px] p-regular-16;
@@ -242,7 +245,7 @@ body {
 
   /* DATA TABLE */
   .data-table {
-    @apply z-10 w-full overflow-hidden rounded-md bg-gray-100 dark:bg-gray-900;
+    @apply z-10 w-full overflow-hidden rounded-md bg-gray-100 dark:bg-dark-300;
   }
   .table-actions {
     @apply flex w-full items-center justify-between space-x-2 p-4;
@@ -252,19 +255,19 @@ body {
   }
 
   .shad-table-row-header {
-    @apply border-b border-gray-100 dark:border-gray-900 hover:bg-transparent !important;
+    @apply border-b border-green-100 dark:border-green-600 hover:bg-transparent !important;
   }
 
   .shad-table-row {
-    @apply border-b  border-gray-100 dark:border-gray-900 !important;
+    @apply border-b  border-gray-200 dark:border-green-600 hover:bg-green-100 dark:hover:bg-green-600 !important;
   }
   .shad-gray-btn {
-    @apply border  cursor-pointer bg-gray-200 dark:bg-gray-800 dark:text-gray-100 text-gray-800 hover:bg-gray-300 dark:hover:bg-gray-900 !important;
+    @apply border  cursor-pointer bg-gray-200 dark:bg-dark-500 dark:text-green-500 text-green-500 hover:bg-gray-300 dark:hover:bg-dark-400 !important;
   }
 
   /* SHAD DIALOG */
   .shad-dialog {
-    @apply bg-gray-100 border-gray-200 dark:bg-gray-800 dark:border-gray-900 !important;
+    @apply bg-gray-100 border-gray-200 dark:bg-dark-300 dark:border-green-600 !important;
   }
 
   .shad-dialog button {

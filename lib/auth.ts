@@ -22,7 +22,6 @@ const authConfig = {
       try {
         // if the user's Email already exists on MongoDB
         const userDB = await User.findOne({ email: user.email });
-        console.log(`userDB signIn: ${userDB}`);
         if (userDB) return true;
         else {
           // create new Account on MongoDB for the user

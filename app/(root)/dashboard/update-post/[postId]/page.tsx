@@ -8,13 +8,15 @@ import React from "react";
 const page = async ({ params }: SearchParamProps) => {
   const postId = params.postId;
   const post = await getPost(postId!);
-
+  console.log(post);
   const session = await auth();
   if (!session) redirect("/");
   const currentUser = await userSignIn(session?.user, true);
   return (
-    <div className="p-3 max-w-3xl mx-auto min-h-screen ">
-      <h1 className="text-center text-3xl my-7 font-semibold">Edit a Blug</h1>
+    <div className="p-3 w-full lg:max-w-3xl mx-auto min-h-screen ">
+      <h1 className="dash-header">
+        Edit <span className="text-green-500">{post.title}</span>
+      </h1>
       <PostForm
         type="edit"
         postId={postId}

@@ -8,6 +8,7 @@ import { handleError, parseStringify } from "../utils";
 import { auth, signIn, signOut } from "../auth";
 import { redirect } from "next/navigation";
 import { userPerPage } from "../constants";
+import { Session } from "next-auth";
 
 export const getLoggedIn = async (user: SignUpParams) => {
   try {
@@ -78,24 +79,15 @@ export const userSignOut = async () => {
   }
 };
 
-export const signDatabaseViaGoogle = async (email: string) => {
-  try {
-    await connectMongo();
-
-    const getUser = await User.findOne({ email });
-    if (!getUser) return console.error("Error with your Google account");
-    return parseStringify(getUser);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 export const google = async () => {
   try {
     await signIn("google", { redirect: true });
-    const session = await auth();
-    const response = await signDatabaseViaGoogle(session?.user?.email);
-    return parseStringify(response);
+    const session = (await auth()) as Session;
+    const email = session?.user?.email;
+    if (!email) throw new Error("No email found in session");
+    const getUser = await User.findOne({ email });
+    if (!getUser) return console.error("Error with your Google account");
+    return parseStringify(getUser);
   } catch (error) {
     throw error;
   }
@@ -132,17 +124,13 @@ export const updateUser = async (user: User) => {
 };
 export const deleteUser = async (userId: string) => {
   try {
-    // await User.findByIdAndDelete(userId);
+    await connectMongo();
 
     const user = await User.findById(userId);
     const session = await auth();
-
     if (!user || !session) return console.error("cannot delete the user");
 
     await User.findByIdAndDelete(userId);
-
-    if (session?.user?.email == user?.email) redirect("/");
-    return await signOut({ redirectTo: "/" });
   } catch (error) {
     handleError(error);
   }

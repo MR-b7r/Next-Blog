@@ -60,7 +60,7 @@ export function PostForm({
         const username = currentUser?.username;
         const newData = { ...data, userId, username };
         const newPost = await createNewPost(newData);
-        toast.success(`Blug is created succesfully`);
+        toast.success(`Blog is created succesfully`);
         router.push("/dashboard/posts");
       }
       if (type === "edit") {
@@ -74,7 +74,7 @@ export function PostForm({
           image: data?.image,
         };
         const editPost = await updatePost(updateData);
-        toast.success(`Blug is Edited succesfully`);
+        toast.success(`Blog is Edited succesfully`);
         router.push("/dashboard/posts");
       }
     } catch (error: any) {

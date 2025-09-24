@@ -38,11 +38,11 @@ const RenderInput = ({
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="w-full ">
+        <div className="w-full">
           <FormLabel className="text-[14px] w-full max-w-[280px] font-medium text-gray-700 dark:text-white mb-1">
             {label}
           </FormLabel>
-          <div className="flex w-full flex-col ">
+          <div className="flex w-full flex-col">
             <FormControl>
               <Input
                 placeholder={placeholder}

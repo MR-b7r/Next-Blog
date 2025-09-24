@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   ColumnDef,
   flexRender,
@@ -16,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Image from "next/image";
 import Pagination from "../Pagination";
 
 interface DataTableProps<TData, TValue> {
@@ -42,7 +40,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="data-table">
       <Table className="shad-table">
-        <TableHeader className="bg-gray-200 dark:bg-gray-950">
+        <TableHeader className="bg-gray-200 dark:bg-dark-500">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="shad-table-row-header">
               {headerGroup.headers.map((header) => {

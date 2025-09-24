@@ -1,18 +1,19 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import googleWhite from "@/public/googleWhite.svg";
 import { google } from "@/lib/actions/user.actions";
-// import { getSession } from "next-auth/react";
-// import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-// import { signSuccess } from "@/lib/features/user/userSlice";
 
 const OAuth = () => {
-  // const dispatch = useAppDispatch();
-  // const { loading } = useAppSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
   async function handleOAuth() {
+    setIsLoading(true);
     const user = await google();
-    // dispatch(signSuccess(user));
+    if (user) {
+      // router.push("/");
+      // router.refresh();
+      setIsLoading(false);
+    }
   }
   return (
     <Button

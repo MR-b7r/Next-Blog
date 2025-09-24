@@ -28,7 +28,7 @@ const AuthForm = ({ type }: { type: string }) => {
   const [user, setUser] = useState(null);
   const router = useRouter();
   const formSchema = authFormSchema(type);
-  // 1. Define the form.
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,8 +40,8 @@ const AuthForm = ({ type }: { type: string }) => {
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      // dispatch(signStart());
       // Sign up
+      console.log(data);
       if (type === "sign-up") {
         const userData = {
           username: data.username!,
@@ -60,15 +60,16 @@ const AuthForm = ({ type }: { type: string }) => {
       }
       // Sign In
       if (type === "sign-in") {
-        const response = await userSignIn({
+        const getUser = await userSignIn({
           email: data.email,
           password: data.password,
         });
-
-        if (!response)
+        // console.log(response);
+        if (!getUser)
           toast.error("cannot get the user. Email or Password is incorrect");
-
-        if (response) router.push("/");
+        setUser(getUser);
+        router.refresh();
+        router.push("/");
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -145,15 +146,15 @@ const AuthForm = ({ type }: { type: string }) => {
           <div className="flex gap-2 text-sm mt-5">
             {type === "sign-in" ? (
               <>
-                <span>Dont Have an account?</span>
-                <Link href="/sign-up" className="text-blue-500">
-                  Sign Up
+                <span>Don&apos;t Have an account?</span>
+                <Link href="/sign-up" className="text-green-500 underline">
+                  Sign up
                 </Link>
               </>
             ) : (
               <>
                 <span>Already Have an account?</span>
-                <Link href="/sign-in" className="text-blue-500">
+                <Link href="/sign-in" className="text-green-500">
                   Sign In
                 </Link>
               </>

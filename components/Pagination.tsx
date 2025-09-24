@@ -41,7 +41,7 @@ const Pagination = ({
         <ArrowLongLeftIcon
           width={24}
           height={24}
-          className="mr-2 text-blue-600"
+          className="mr-2 text-green-500"
         />
         Prev
       </Button>
@@ -57,7 +57,7 @@ const Pagination = ({
         <ArrowLongRightIcon
           width={24}
           height={24}
-          className="ml-2 text-blue-600"
+          className="ml-2 text-green-500"
         />
       </Button>
     </div>

@@ -43,28 +43,12 @@ const MobNav = () => {
             <li key={el.name}>
               <Link
                 href={el.link}
-                className="block py-2 px-3 text-gray-800 rounded hover:bg-gray-200 dark:hover:bg-dark-500 md:hover:bg-transparent md:p-0 hover:text-green-500 dark:text-gray-100 dark:hover:text-green-500  dark:border-gray-700"
+                className="block py-2 px-3 text-gray-800 rounded hover:bg-gray-200 dark:hover:bg-dark-500 md:hover:bg-transparent dark:md:hover:bg-transparent md:p-0 hover:text-green-500 dark:text-gray-100 dark:hover:text-green-500  dark:border-gray-700"
               >
                 {el.name}
               </Link>
             </li>
           ))}
-          {/* <li>
-            <Link
-              href="/about"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-            >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/projects"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-            >
-              Projects
-            </Link>
-          </li> */}
         </ul>
       </div>
     </>

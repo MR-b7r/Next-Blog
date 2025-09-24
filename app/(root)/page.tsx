@@ -11,7 +11,7 @@ export default async function Home() {
         <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 ">
           <div className="flex flex-col justify-center gap-8">
             <h1 className="h1-bold text-gray-950 dark:text-gray-200">
-              Create, Share: Your Blugs, Our Dev Platform!
+              Create, Share: Your Blogs, Our Dev Platform!
             </h1>
             <p className="p-regular-20 md:p-regular-24">
               Variety of articles and tutorials on topics such as web
