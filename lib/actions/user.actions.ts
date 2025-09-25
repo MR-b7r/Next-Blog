@@ -29,17 +29,25 @@ export const getLoggedIn = async (user: SignUpParams) => {
 export const userSignUp = async (user: SignUpParams) => {
   try {
     await connectMongo();
-
     const { username, email, password } = user;
+
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) throw new Error("account with this email exists");
+
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) throw new Error("account with this username exists");
+
     const hashedPassword = bcryptjs.hashSync(password, 8);
     const newUser = await User.create({
       username,
       email,
       password: hashedPassword,
     });
+    await newUser.save();
+
     return parseStringify(newUser);
   } catch (error) {
-    handleError(error);
+    throw error;
   }
 };
 

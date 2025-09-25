@@ -3,18 +3,19 @@
 import { authFormSchema } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomForm from "./CustomForm";
 import { Loader2 } from "lucide-react";
-import { userSignIn, userSignUp } from "@/lib/actions/user.actions";
+import { userSignUp } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 
 import OAuth from "./OAuth";
 import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -25,7 +26,6 @@ export enum FormFieldType {
 }
 
 const AuthForm = ({ type }: { type: string }) => {
-  const [user, setUser] = useState(null);
   const router = useRouter();
   const formSchema = authFormSchema(type);
 
@@ -37,11 +37,9 @@ const AuthForm = ({ type }: { type: string }) => {
     },
   });
 
-  // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       // Sign up
-      console.log(data);
       if (type === "sign-up") {
         const userData = {
           username: data.username!,
@@ -49,25 +47,24 @@ const AuthForm = ({ type }: { type: string }) => {
           password: data.password,
         };
         const newUser = await userSignUp(userData);
-
-        setUser(newUser);
-        const response = await userSignIn({
-          email: data.email,
-          password: data.password,
-        });
-        if (response) toast.success("A new Account created successfully");
-        if (response) router.push("/");
+        if (newUser) {
+          toast.success("Account created, please sign in");
+          router.push("/sign-in");
+        }
       }
       // Sign In
-      if (type === "sign-in") {
-        const getUser = await userSignIn({
+      if (type == "sign-in") {
+        const getUser = await signIn("credentials", {
+          redirect: false,
           email: data.email,
           password: data.password,
         });
-        // console.log(response);
-        if (!getUser)
-          toast.error("cannot get the user. Email or Password is incorrect");
-        setUser(getUser);
+        if (getUser?.error)
+          return toast.error(
+            "cannot get the user. Email or Password is incorrect"
+          );
+
+        toast.success("Welcome back!");
         router.refresh();
         router.push("/");
       }

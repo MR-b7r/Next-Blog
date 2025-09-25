@@ -1,13 +1,14 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
 
-// export interface IUser extends Document {
-//   username: string;
-//   email: string;
-//   password: string;
-//   profilePicture: string;
-//   isAdmin: boolean;
-// }
-const userSchema: Schema = new mongoose.Schema(
+export interface IUser extends Document {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  profilePicture?: string;
+  isAdmin?: boolean;
+}
+const UserSchema: Schema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -36,5 +37,8 @@ const userSchema: Schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.models.User || mongoose.model<User>("User", userSchema);
+// const User = mongoose.models.User || mongoose.model<User>("User", UserSchema);
+
+const User: Model<IUser> =
+  mongoose.models.User || mongoose.model<IUser>("User", UserSchema);
 export default User;

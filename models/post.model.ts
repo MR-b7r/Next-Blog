@@ -1,6 +1,17 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 
-const postSchema: Schema = new mongoose.Schema(
+export interface IPost extends Document {
+  id: string;
+  userId: string;
+  content: string;
+  title: string;
+  image?: string;
+  category?: string;
+  slug: string;
+  username: string;
+}
+
+const PostSchema: Schema = new mongoose.Schema(
   {
     userId: {
       type: String,
@@ -37,5 +48,9 @@ const postSchema: Schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Post = mongoose.models?.Post || mongoose.model<Post>("Post", postSchema);
+// const Post = mongoose.models?.Post || mongoose.model<Post>("Post", postSchema);
+
+const Post: Model<IPost> =
+  mongoose.models.Post || mongoose.model<IPost>("Post", PostSchema);
+
 export default Post;

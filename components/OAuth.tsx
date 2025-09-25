@@ -2,24 +2,23 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import googleWhite from "@/public/googleWhite.svg";
-import { google } from "@/lib/actions/user.actions";
+import { signIn } from "next-auth/react";
 
 const OAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
-  async function handleOAuth() {
+
+  const handleProvider = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsLoading(true);
-    const user = await google();
-    if (user) {
-      // router.push("/");
-      // router.refresh();
-      setIsLoading(false);
-    }
-  }
+    e.preventDefault();
+    await signIn("google", { callbackUrl: "/" });
+    setIsLoading(false);
+  };
+
   return (
     <Button
-      onClick={handleOAuth}
+      onClick={(e) => handleProvider(e)}
       className={`text-16 rounded-lg font-semibold text-gray-900 bg-gray-200 dark:text-white dark:bg-gray-800 hover:logo-gradient w-full`}
-      // disabled={loading}
+      disabled={isLoading}
     >
       <Image
         src={googleWhite}

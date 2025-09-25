@@ -118,7 +118,7 @@ export const authFormSchema = (type: string) =>
             .min(3, "Username must be at least 3 characters long.")
             .max(20, "Username must be at most 20 characters long.")
             .regex(
-              /^[a-z0-9._]+$/,
+              /^[a-zA-Z0-9._]+$/,
               "Username can only has lowercase letters (a-z), numbers (0-9), dots (.), and underscores (_)."
             ),
     // both
@@ -138,7 +138,7 @@ export const updateProfile = () =>
       .min(3, "Username must be at least 3 characters long.")
       .max(20, "Username must be at most 20 characters long.")
       .regex(
-        /^[a-z0-9._]+$/,
+        /^[a-zA-Z0-9._]+$/,
         "Username can only has lowercase letters (a-z), numbers (0-9), dots (.), and underscores (_)."
       ),
     email: z.string().email().optional(),

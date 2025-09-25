@@ -10,7 +10,7 @@ const SignoutUser = ({ icon, style }: { icon?: boolean; style?: string }) => {
 
   const handleSignOut = async () => {
     try {
-      const signout = await userSignOut();
+      await userSignOut();
       router.refresh();
     } catch (error) {
       console.error(error);
