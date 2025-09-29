@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { updateProfile } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,34 +12,39 @@ import { updateUser } from "@/lib/actions/user.actions";
 import toast from "react-hot-toast";
 import { FormFieldType } from "../AuthForm";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-const DashProfile = ({ currentUser }) => {
+const DashProfile = () => {
+  const { data: session, update } = useSession();
+  const user = session?.user;
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const formSchema = updateProfile();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: currentUser?.username,
-      email: currentUser?.email,
+      profilePicture: user?.profilePicture,
+      username: user?.username,
+      email: user?.email,
     },
   });
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      if (!user || !user.id) return;
       setIsLoading(true);
-      if (!data.profilePicture)
-        data.profilePicture = currentUser?.profilePicture;
-      if (!data.password) data.password = currentUser?.password;
+
       if (data) {
         const updateData: User = {
-          ...currentUser,
+          ...user,
           username: data.username,
-          email: data.email,
-          password: data.password,
-          profilePicture: data.profilePicture,
+          email: data.email ?? user?.email ?? "",
+          password: data.password ?? "",
+          profilePicture: data.profilePicture ?? user?.profilePicture ?? "",
         };
-
         await updateUser(updateData);
+
+        await update({ ...session?.user, ...data });
         toast.success("profile updated successfully");
         router.refresh();
       }
@@ -50,6 +54,16 @@ const DashProfile = ({ currentUser }) => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        profilePicture: user.profilePicture || "",
+        username: user.username || "",
+        email: user.email || "",
+      });
+    }
+  }, [user]);
 
   return (
     <Form {...form}>
@@ -65,14 +79,15 @@ const DashProfile = ({ currentUser }) => {
         <CustomForm
           fieldType={FormFieldType.INPUT}
           control={form.control}
-          name="username"
-          label="username"
+          name="email"
+          label="email"
+          disabled={true}
         />
         <CustomForm
           fieldType={FormFieldType.INPUT}
           control={form.control}
-          name="email"
-          label="email"
+          name="username"
+          label="username"
         />
         <CustomForm
           fieldType={FormFieldType.PASSWORD}

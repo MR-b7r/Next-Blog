@@ -15,7 +15,7 @@ export function ThemeSwitcher() {
 
   return (
     <div
-      className="p-2 border border-gray-300 rounded-full bg-white hover:bg-gray-100 dark:bg-dark-400 dark:hover:bg-dark-500 duration-200 dark:border-gray-600  dark:text-white flex-center cursor-pointer"
+      className="w-10 h-10 flex items-center justify-center border border-green-500 rounded-full bg-gray-100 hover:bg-gray-50 dark:bg-dark-200 dark:hover:bg-dark-400 duration-200  dark:text-white cursor-pointer"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
       <button className="w-5 h-5">

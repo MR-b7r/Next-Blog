@@ -1,2 +1,2 @@
-export const postPerPage = 2;
-export const userPerPage = 4;
+export const postPerPage = 5;
+export const userPerPage = 5;

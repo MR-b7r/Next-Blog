@@ -1,9 +1,9 @@
-import { getPosts } from "@/lib/actions/post.actions";
+import { getAllPosts } from "@/lib/actions/post.actions";
 import React from "react";
 import PostCard from "./post/PostCard";
 
-const RecentPosts = async ({ pageNumber }: { pageNumber?: number }) => {
-  const { recentPosts } = await getPosts();
+const RecentPosts = async () => {
+  const { recentPosts } = await getAllPosts({});
   return (
     <div className="flex flex-col justify-center items-center mb-5">
       <h1 className="text-3xl mt-5 font-semibold tracking-wide">

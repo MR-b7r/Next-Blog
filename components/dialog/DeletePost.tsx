@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { deletePost } from "@/lib/actions/post.actions";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const DeletePost = ({
   postId,
@@ -13,13 +14,15 @@ const DeletePost = ({
   setOpen?: (open: boolean) => void;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const handleDeletePost = async () => {
     try {
       setIsLoading(true);
-      const deletedPost = await deletePost(postId);
+      await deletePost(postId);
 
       toast.success(`Post with title "${post.title}" is deleted`);
-    } catch (error) {
+      router.refresh();
+    } catch (error: any) {
       toast.error("cannot delete the Post");
     } finally {
       setOpen && setOpen(false);

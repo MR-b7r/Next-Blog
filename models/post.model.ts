@@ -9,6 +9,9 @@ export interface IPost extends Document {
   category?: string;
   slug: string;
   username: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const PostSchema: Schema = new mongoose.Schema(
@@ -49,7 +52,6 @@ const PostSchema: Schema = new mongoose.Schema(
 );
 
 // const Post = mongoose.models?.Post || mongoose.model<Post>("Post", postSchema);
-
 const Post: Model<IPost> =
   mongoose.models.Post || mongoose.model<IPost>("Post", PostSchema);
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "./ui/button";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { formUrlQuery } from "@/lib/utils";
@@ -45,7 +44,9 @@ const Pagination = ({
         />
         Prev
       </Button>
-
+      <span className=" italic text-[14px]">
+        Total Pages: <span className="text-green-500">{totalPages}</span>
+      </span>
       <Button
         variant="outline"
         size="sm"

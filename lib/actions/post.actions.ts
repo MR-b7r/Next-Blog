@@ -4,8 +4,9 @@ import Post from "@/models/post.model";
 import { connectMongo } from "../mongodb";
 import { handleError, parseStringify } from "../utils";
 import { postPerPage } from "../constants";
+import User from "@/models/user.model";
 
-export const createNewPost = async (postData: CreatePost) => {
+export const createPost = async (postData: CreatePost) => {
   try {
     await connectMongo();
     if (!postData.title || !postData.content) {
@@ -31,10 +32,23 @@ export const createNewPost = async (postData: CreatePost) => {
   }
 };
 
-export const getPost = async (postId: string) => {
+export const getPost = async ({
+  postId,
+  isAdmin,
+  userId,
+}: {
+  postId: string;
+  isAdmin: boolean;
+  userId: string;
+}) => {
   try {
     await connectMongo();
-    const post = await Post.findById(postId);
+    let post;
+    if (!isAdmin) {
+      post = await Post.findOne({ _id: postId, userId });
+      if (!post) return;
+    }
+    post = await Post.findById(postId);
     return parseStringify(post);
   } catch (error) {
     handleError(error);
@@ -49,7 +63,15 @@ export const getPostBySLug = async (slug: string) => {
     handleError(error);
   }
 };
-export const getPosts = async (pageNumber?: number) => {
+export const getAllPosts = async ({
+  pageNumber,
+  isAdmin,
+  userId,
+}: {
+  pageNumber?: boolean;
+  isAdmin?: boolean;
+  userId?: string;
+}) => {
   try {
     let allPosts = {};
 
@@ -60,13 +82,24 @@ export const getPosts = async (pageNumber?: number) => {
       const startIndex = limit - postPerPage;
       // const sortDirection = getPosts.order === "asc" ? 1 : -1;
 
-      const posts = await Post.find({})
-        .sort({ updatedAt: -1 })
-        .skip(startIndex)
-        .limit(limit);
-      const totalPosts = await Post.countDocuments();
+      let posts;
+      let totalPosts = 1;
+      if (!isAdmin) {
+        posts = await Post.find({ userId })
+          .sort({ updatedAt: -1 })
+          .skip(startIndex)
+          .limit(limit);
+        totalPosts = await Post.countDocuments({ userId });
+      } else {
+        posts = await Post.find({})
+          .sort({ updatedAt: -1 })
+          .skip(startIndex)
+          .limit(limit);
+        totalPosts = await Post.countDocuments();
+      }
+      const totalPages = Math.ceil(totalPosts / postPerPage);
 
-      allPosts = { ...allPosts, posts, totalPosts };
+      allPosts = { ...allPosts, posts, totalPosts, totalPages };
     }
 
     const now = new Date();
@@ -126,19 +159,26 @@ export const getFilteredPosts = async (filter: searchFiterParams) => {
 export const updatePost = async (post: EditPost) => {
   try {
     await connectMongo();
-    const { content, title, image, category } = post;
+    const { content, title, image, category, userId, id } = post;
+
     const newPost: UpdatePost = {
       content,
       title,
       image,
       category,
     };
-    if (post && post._id) {
-      const checkPost = await Post.findById(post._id!);
+    if (post && id) {
+      const checkPost = await Post.findById(id!);
       if (!checkPost) return;
+      if (checkPost.userId !== userId) {
+        const getUser = await User.findById(userId);
+        if (!getUser || !getUser.isAdmin)
+          return console.error("You are not authorized to edit this post");
+      }
     }
+
     const updatePost = await Post.findByIdAndUpdate(
-      post._id,
+      id,
       {
         $set: newPost,
       },

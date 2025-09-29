@@ -4,14 +4,7 @@ import React from "react";
 import HeaderProfile from "./HeaderProfile";
 import SearchBar from "./SearchBar";
 import MobNav from "./MobNav";
-import { auth } from "@/lib/auth";
-import { userSignIn } from "@/lib/actions/user.actions";
 const Navbar = async () => {
-  const session = await auth();
-  let currentUser;
-  if (session) {
-    currentUser = await userSignIn(session?.user, true);
-  }
   return (
     <nav className="bg-gray-100 dark:bg-dark-200 w-full">
       <div className="max-w-screen-xl flex items-center justify-between flex-wrap mx-auto p-4">
@@ -35,7 +28,7 @@ const Navbar = async () => {
           <SearchBar />
         </div>
         <MobNav />
-        <HeaderProfile currentUser={currentUser} />
+        <HeaderProfile />
       </div>
     </nav>
   );

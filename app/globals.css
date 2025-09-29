@@ -225,7 +225,7 @@ body {
     @apply bg-grey-50 h-[54px] focus-visible:ring-offset-0 placeholder:text-grey-500 rounded-full p-regular-16 px-4 py-3 border-none focus-visible:ring-transparent !important;
   }
   .shad-input {
-    @apply rounded-lg border border-gray-300 text-dark-400 bg-gray-100 placeholder:text-dark-500 dark:text-gray-100 dark:border-gray-200 dark:placeholder:text-gray-200 dark:bg-dark-400 focus-visible:ring-offset-green-500 focus-visible:ring-0 !important;
+    @apply rounded-lg border bg-neutral-100 placeholder:text-gray-500 border-neutral-300 dark:bg-dark-400 dark:text-neutral-200 text-dark-500 dark:placeholder:text-neutral-400 focus-visible:ring-offset-green-500 focus-visible:ring-0 !important;
   }
   .button {
     @apply rounded-full h-[54px] p-regular-16;
@@ -259,7 +259,7 @@ body {
   }
 
   .shad-table-row {
-    @apply border-b  border-gray-200 dark:border-green-600 hover:bg-green-100 dark:hover:bg-green-600 !important;
+    @apply border-b  border-neutral-200 dark:border-green-600 hover:bg-green-100 dark:hover:bg-green-600 !important;
   }
   .shad-gray-btn {
     @apply border  cursor-pointer bg-gray-200 dark:bg-dark-500 dark:text-green-500 text-green-500 hover:bg-gray-300 dark:hover:bg-dark-400 !important;
@@ -267,7 +267,7 @@ body {
 
   /* SHAD DIALOG */
   .shad-dialog {
-    @apply bg-gray-100 border-gray-200 dark:bg-dark-300 dark:border-green-600 !important;
+    @apply bg-gray-100 border-neutral-200 dark:bg-dark-300 dark:border-green-600 !important;
   }
 
   .shad-dialog button {
@@ -276,15 +276,18 @@ body {
 
   /* SHAD TEXTAREA */
   .shad-textArea {
-    @apply bg-gray-100 border-gray-200 dark:bg-gray-800 dark:border-gray-900 placeholder:text-gray-800 dark:placeholder:text-gray-100 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+    @apply border-neutral-300 text-dark-500 placeholder:text-gray-500 dark:text-neutral-200 dark:border-neutral-400 dark:placeholder:text-neutral-400 bg-neutral-100 dark:bg-dark-400 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
   }
 
   /* SHAD SELECT  */
   .shad-select-trigger {
-    @apply bg-gray-400  placeholder:text-gray-600 border-gray-500 h-11 focus:ring-0 focus:ring-offset-0 !important;
+    @apply bg-neutral-100 placeholder:text-gray-500 border-neutral-300 dark:bg-dark-400 dark:text-neutral-200 text-dark-500 dark:placeholder:text-neutral-400 focus-visible:ring-offset-green-500 focus-visible:ring-0 ring-0 !important;
   }
   .shad-select-content {
-    @apply bg-gray-400 border-gray-500 !important;
+    @apply bg-neutral-100 dark:bg-dark-400 dark:text-neutral-200 text-dark-500 !important;
+  }
+  .shad-select-item {
+    @apply hover:bg-neutral-200 dark:hover:bg-dark-500 !important;
   }
 
   /* SHAD ERROR */

@@ -14,8 +14,7 @@ export function FileUploader({ onFieldChange }: FileUploaderProps) {
         onFieldChange(urls[0]);
       }}
       onUploadError={(error: Error) => {
-        throw new Error(`something w
-          ent wrong, try again later: ${error}`);
+        throw new Error(`something went wrong, try again later: ${error}`);
       }}
     />
   );

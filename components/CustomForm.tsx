@@ -33,7 +33,7 @@ const RenderInput = ({
   field: any;
   props: CustomFormProps;
 }) => {
-  const { fieldType, control, name, label, placeholder } = props;
+  const { fieldType, control, name, label, placeholder, disabled } = props;
 
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -47,6 +47,7 @@ const RenderInput = ({
               <Input
                 placeholder={placeholder}
                 {...field}
+                disabled={disabled}
                 className="shad-input"
               />
             </FormControl>
@@ -74,14 +75,12 @@ const RenderInput = ({
 
     case FormFieldType.TEXTAREA:
       return (
-        <div className="flex rounded-md border border-gray-300 text-gray-500 placeholder:text-gray-500 dark:text-white dark:border-gray-200 dark:placeholder:text-gray-300 focus-visible:ring-blue-400 dark:bg-gray-700 focus:border-none">
-          <Textarea
-            placeholder={placeholder}
-            {...field}
-            className="shad-textArea"
-            disabled={props.disabled}
-          ></Textarea>
-        </div>
+        <Textarea
+          placeholder={placeholder}
+          {...field}
+          className="shad-textArea"
+          disabled={props.disabled}
+        ></Textarea>
       );
     case FormFieldType.SELECT:
       return (

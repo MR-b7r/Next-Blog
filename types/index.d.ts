@@ -8,14 +8,14 @@ declare type SearchParamProps = {
 // ========================================
 
 declare type User = {
-  _id: string;
+  id: string;
   username: string;
   email: string;
   password: string;
   profilePicture: string;
   isAdmin: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 declare type Post = {
   _id: string;
@@ -46,11 +46,11 @@ declare type getPosts = {
   order: string;
 };
 declare type EditPost = {
-  _id: string;
+  id: string;
   userId: string;
   content: string;
   title: string;
-  image: string;
+  image?: string;
   category: string;
 };
 
@@ -70,8 +70,8 @@ declare interface UpdatePost {
 declare type CreatePost = {
   content: string;
   title: string;
-  image: string;
-  category: string;
+  image?: string;
+  category?: string;
   userId: string;
   username: string;
 };

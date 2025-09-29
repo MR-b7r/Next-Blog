@@ -6,7 +6,6 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import ReactQuill from "react-quill";
 
 import "react-quill/dist/quill.snow.css";
 import { Button } from "@/components/ui/button";
@@ -22,21 +21,25 @@ import {
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { postForm } from "@/lib/utils";
-import { createNewPost, getPost, updatePost } from "@/lib/actions/post.actions";
+import { createPost, updatePost } from "@/lib/actions/post.actions";
 import { FileUploader } from "../FileUploader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { Loader2 } from "lucide-react";
 
 export function PostForm({
   type,
   postId,
   post,
-  currentUser,
 }: {
   type: "edit" | "create";
   postId?: string;
   post?: Post;
 }) {
+  const { data: session } = useSession();
+  const user = session?.user;
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const formSchema = postForm();
@@ -54,26 +57,32 @@ export function PostForm({
   });
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      if (!user || !user.id)
+        return toast.error("You must be logged in to perform this action");
+
       if (type === "create") {
         setIsLoading(true);
-        const userId = currentUser?._id;
-        const username = currentUser?.username;
-        const newData = { ...data, userId, username };
-        const newPost = await createNewPost(newData);
+        const newPostData = {
+          ...data,
+          userId: user.id,
+          username: user?.username,
+        };
+        await createPost(newPostData);
         toast.success(`Blog is created succesfully`);
         router.push("/dashboard/posts");
       }
       if (type === "edit") {
         setIsLoading(true);
+
         const updateData = {
-          _id: postId!,
-          userId: currentUser?._id!,
-          category: data.category,
-          title: data.title,
-          content: data.content,
-          image: data?.image,
+          id: postId!,
+          userId: user.id,
+          category: data.category!,
+          title: data.title!,
+          content: data.content!,
+          image: data.image,
         };
-        const editPost = await updatePost(updateData);
+        await updatePost(updateData);
         toast.success(`Blog is Edited succesfully`);
         router.push("/dashboard/posts");
       }
@@ -114,13 +123,19 @@ export function PostForm({
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[180px] shad-select-trigger">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="javascript">JavaScript</SelectItem>
-                    <SelectItem value="reactjs">React.js</SelectItem>
-                    <SelectItem value="nextjs">Next.js</SelectItem>
+                  <SelectContent className="shad-select-content">
+                    <SelectItem value="javascript" className="shad-select-item">
+                      JavaScript
+                    </SelectItem>
+                    <SelectItem value="reactjs" className="shad-select-item">
+                      React.js
+                    </SelectItem>
+                    <SelectItem value="nextjs" className="shad-select-item">
+                      Next.js
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -144,7 +159,6 @@ export function PostForm({
           name="content"
           render={({ field }) => (
             <FormControl>
-              {/* <ReactQuill theme="snow" className="h-72 mb-12" {...field} /> */}
               <div className="min-h-[300px]">
                 <MDEditor
                   // value={field.value}
@@ -159,9 +173,19 @@ export function PostForm({
 
         <Button
           type="submit"
+          disabled={isLoading}
           className="text-16 rounded-lg logo-gradient font-semibold text-white"
         >
-          {type === "create" ? "Publish" : "Update"}
+          {isLoading ? (
+            <>
+              <Loader2 size={20} className="animate-spin" />
+              &nbsp; Loading...
+            </>
+          ) : type === "edit" ? (
+            "Edit Blog"
+          ) : (
+            "Create Blog"
+          )}
         </Button>
       </form>
     </Form>

@@ -13,8 +13,12 @@ import { Loader2 } from "lucide-react";
 import { FormFieldType } from "../AuthForm";
 import toast from "react-hot-toast";
 import { createComment } from "@/lib/actions/comment.actions";
+import { useSession } from "next-auth/react";
 
-const CommentSection = ({ postId, currentUser }: { postId: string }) => {
+const CommentForm = ({ postId }: { postId: string }) => {
+  const { data: session } = useSession();
+  const user = session?.user;
+
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const formSchema = commentschema();
@@ -27,10 +31,12 @@ const CommentSection = ({ postId, currentUser }: { postId: string }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      if (!user || !user.id) return;
+
       setIsLoading(true);
       if (!data.comment) return;
       const updateData = {
-        userId: currentUser?._id!,
+        userId: user.id,
         postId,
         comment: data.comment,
       };
@@ -46,20 +52,20 @@ const CommentSection = ({ postId, currentUser }: { postId: string }) => {
 
   return (
     <div className="max-w-2xl mx-auto w-full ">
-      {currentUser ? (
+      {user ? (
         <>
           <div className="flex items-center gap-1 my-5 text-dark-300 dark:text-gray-100 text-sm">
             <p>Signed in as:</p>
             <img
               className="h-6 w-6 object-cover rounded-full"
-              src={currentUser.profilePicture}
+              src={user.profilePicture}
               alt="profile Photo"
             />
             <Link
               href={"/dashboard"}
               className="text-xs text-green-500 hover:underline"
             >
-              @{currentUser.username}
+              @{user.username}
             </Link>
           </div>
           <Form {...form}>
@@ -94,7 +100,7 @@ const CommentSection = ({ postId, currentUser }: { postId: string }) => {
           </Form>
         </>
       ) : (
-        <div className="text-sm text-teal-500 my-5 flex gap-1">
+        <div className="text-sm text-dark-500 dark:text-gray-50 my-5 flex gap-1">
           You must be signed in to comment.
           <Link className="text-green-500 hover:underline" href={"/sign-in"}>
             Sign In
@@ -105,4 +111,4 @@ const CommentSection = ({ postId, currentUser }: { postId: string }) => {
   );
 };
 
-export default CommentSection;
+export default CommentForm;
