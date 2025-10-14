@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { signOut } from "@/lib/auth";
 
 const DeleteUser = ({
   userId,

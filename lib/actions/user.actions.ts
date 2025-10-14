@@ -147,33 +147,33 @@ export const getUserById = async (userId: string) => {
     handleError(error);
   }
 };
-export const getUsers = async (pageNumber?: number) => {
+export const getUsers = async (pageNumber: number) => {
   try {
-    let allUsers = {};
-
     await connectMongo();
 
-    if (pageNumber) {
-      const limit = pageNumber * userPerPage;
-      const startIndex = limit - userPerPage;
-      // const sortDirection = getPosts.order === "asc" ? 1 : -1;
+    const limit = pageNumber * userPerPage;
+    const startIndex = limit - userPerPage;
+    const users = await User.find()
+      .sort({ createdAt: -1 })
+      .skip(startIndex)
+      .limit(limit);
 
-      const users = await User.find({})
-        .sort({ createdAt: -1 })
-        .skip(startIndex)
-        .limit(limit);
-      const totalUsers = await User.countDocuments();
-
-      allUsers = { ...allUsers, users, totalUsers };
-    }
-
-    return parseStringify(allUsers);
+    return parseStringify(users);
   } catch (error) {
     handleError(error);
   }
 };
 
-export const getUsersByMonth = async () => {
+export const getTotalUsers = async () => {
+  try {
+    await connectMongo();
+    const totalUsers = await User.countDocuments();
+    return totalUsers as number;
+  } catch (error) {
+    handleError(error);
+  }
+};
+export const getUserAndPostsByMonth = async () => {
   await connectMongo();
 
   // List of month names
@@ -249,7 +249,6 @@ export const getUsersByMonth = async () => {
     },
   ]);
 
-  // Merge counts into months array
   postsByMonth.forEach((item) => {
     const target = months.find(
       (m) => m.year === item._id.year && m.month === item._id.month - 1
@@ -257,7 +256,7 @@ export const getUsersByMonth = async () => {
     if (target) target.posts = item.posts;
   });
 
-  // Final format: { month: "January", users: 186 }
+  // Final format: { month: "Jan", users: 186, posts: 50 }
   return months.map((m) => ({
     month: monthNames[m.month],
     users: m.users,

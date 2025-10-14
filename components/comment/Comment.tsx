@@ -1,11 +1,10 @@
 import React from "react";
-import { deleteComment, likeComment } from "@/lib/actions/comment.actions";
 import { getUserById } from "@/lib/actions/user.actions";
-import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import moment from "moment";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import CommentHandler from "./CommentHandler";
 
 const Comment = async ({ comment }: { comment: Message }) => {
   const session = await auth();
@@ -18,10 +17,6 @@ const Comment = async ({ comment }: { comment: Message }) => {
       profilePicture: "/default-profile.webp",
     };
   }
-  // async function handleDelete(commentId: string) {
-  //   await deleteComment(commentId);
-  // }
-
   return (
     <div className="flex p-4 border-b dark:border-gray-600 text-sm max-w-2xl mx-auto w-full ">
       <div className="flex-shrink-0 mr-3">
@@ -49,41 +44,7 @@ const Comment = async ({ comment }: { comment: Message }) => {
         <p className="text-dark-400 dark:text-gray-100 pb-2">
           {comment.comment}
         </p>
-        <div className="flex items-center pt-1 text-xs border-t dark:border-gray-700 max-w-fit gap-2">
-          <button
-            type="button"
-            // onClick={() => likeComment(comment.id)}
-            className={`text-gray-400 hover:text-green-500 ${
-              user && comment.likes.includes(user.id) && "!text-green-500"
-            }`}
-          >
-            <HandThumbUpIcon className="w-4 font-bold" />
-          </button>
-          <p className="text-gray-400">
-            {comment.numberOfLikes > 0 &&
-              comment.numberOfLikes +
-                " " +
-                (comment.numberOfLikes === 1 ? "like" : "likes")}
-          </p>
-          {user && (user.id === comment.userId || user.isAdmin) && (
-            <>
-              <button
-                type="button"
-                // onClick={handleEdit}
-                className="text-gray-400 hover:text-green-500"
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                // onClick={() => handleDelete(comment.id)}
-                className="text-gray-400 hover:text-red-500"
-              >
-                Delete
-              </button>
-            </>
-          )}
-        </div>
+        <CommentHandler user={user} comment={comment} />
       </div>
     </div>
   );

@@ -1,19 +1,18 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import Image from "next/image";
-import Link from "next/link";
-// import PostModal from "../PostModal";
-import { Button } from "../ui/button";
 import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import UserModal from "../UserModal";
+import { formatDateTime } from "@/lib/utils";
 
 export const columns: ColumnDef<User>[] = [
   {
     header: "Date created",
     cell: ({ row }) => (
       <p className="text-14-medium text-dark-500 dark:text-gray-100">
-        {new Date(row.original.createdAt).toLocaleDateString()}
+        {row.original.createdAt
+          ? formatDateTime(row.original.createdAt).dateOnly
+          : "N/A"}{" "}
       </p>
     ),
   },
@@ -66,7 +65,7 @@ export const columns: ColumnDef<User>[] = [
       const user = row.original;
       return (
         <div className="flex md:gap-1 items-center ">
-          <UserModal userId={user._id} username={user.username} />
+          <UserModal userId={user.id} username={user.username} />
         </div>
       );
     },

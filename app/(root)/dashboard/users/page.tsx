@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/table/DataTable";
 import { columns } from "@/components/table/userColumns";
-import { getUsers, getUsersByMonth } from "@/lib/actions/user.actions";
+import { getTotalUsers, getUsers } from "@/lib/actions/user.actions";
 import { auth } from "@/lib/auth";
 import { userPerPage } from "@/lib/constants";
 import { redirect } from "next/navigation";
@@ -12,14 +12,13 @@ const page = async ({ searchParams }: SearchParamProps) => {
   if (!isAdmin) redirect("/dashboard");
 
   const pageNumber = Number(searchParams.page || 1);
-  const { users, totalUsers } = await getUsers(pageNumber);
-  const totalPages = Math.ceil(totalUsers / userPerPage);
+  const users = await getUsers(pageNumber);
+  const totalUsers = await getTotalUsers();
+  const totalPages = Math.ceil((totalUsers ?? 0) / userPerPage);
 
-  const usersby = await getUsersByMonth();
-  console.log(usersby);
   return (
-    <div className="data-table">
-      <div className="flex justify-between items-center gap-5 py-5 px-3">
+    <div className="data-table p-4">
+      <div className="flex justify-between items-center gap-5 py-2 px-2">
         <span className="md:text-lg text-sm ">
           Showing results for{" "}
           <span className="text-green-500">{totalUsers}</span> users.

@@ -5,8 +5,8 @@ import React, { useEffect, useState } from "react";
 
 const navElements = [
   { name: "Home", link: "/" },
-  { name: "About", link: "/about" },
-  { name: "Projects", link: "/projects" },
+  { name: "About", link: "#" },
+  { name: "Projects", link: "#" },
 ];
 const MobNav = () => {
   const [isCollapse, setIsCollapse] = useState(true);

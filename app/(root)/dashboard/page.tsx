@@ -12,7 +12,7 @@ const page = async () => {
   if (!session?.user) redirect("/");
   const { user } = session;
   return (
-    <div className="max-w-lg mx-auto p-3 w-full mb-5">
+    <div className="max-w-lg mx-auto p-6 w-full mb-5">
       <h1 className="dash-header">{user?.username}</h1>
       <div className="flex items-center justify-center my-4">
         <img

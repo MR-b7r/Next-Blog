@@ -18,7 +18,7 @@ declare type User = {
   updatedAt?: Date;
 };
 declare type Post = {
-  _id: string;
+  id: string;
   userId: string;
   content: string;
   title: string;
@@ -30,7 +30,7 @@ declare type Post = {
   username: string;
 };
 declare type Message = {
-  _id: string;
+  id: string;
   comment: string;
   postId: string;
   userId: string;
@@ -98,7 +98,7 @@ declare type NewUserParams = {
 };
 
 declare type searchFiterParams = {
-  searchTerm: string;
-  sort: string;
-  category: string;
+  searchTerm?: string;
+  sort?: string;
+  category?: string;
 };

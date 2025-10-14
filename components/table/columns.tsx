@@ -1,17 +1,19 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import Image from "next/image";
 import Link from "next/link";
 import PostModal from "../post/PostModal";
 import { Button } from "../ui/button";
+import { formatDateTime } from "@/lib/utils";
 
 export const columns: ColumnDef<Post>[] = [
   {
     header: "Data Updated",
     cell: ({ row }) => (
       <p className="text-14-medium">
-        {new Date(row.original.updatedAt).toLocaleDateString()}
+        {row.original.createdAt
+          ? formatDateTime(row.original.createdAt).dateOnly
+          : "N/A"}{" "}
       </p>
     ),
   },
@@ -58,10 +60,10 @@ export const columns: ColumnDef<Post>[] = [
             variant="ghost"
             className={`capitalize text-green-500 hover:text-green-500 tracking-wide hover:bg-green-200 dark:hover:bg-green-700 `}
           >
-            <Link href={`update-post/${post._id}`}>Edit</Link>
+            <Link href={`update-post/${post.id}`}>Edit</Link>
           </Button>
           <PostModal
-            postId={post._id}
+            postId={post.id}
             userId={post.userId}
             post={post}
             type="delete"

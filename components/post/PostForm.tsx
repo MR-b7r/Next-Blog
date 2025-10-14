@@ -27,6 +27,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
+import { categoriesNames } from "@/lib/constants";
 
 export function PostForm({
   type,
@@ -127,15 +128,15 @@ export function PostForm({
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent className="shad-select-content">
-                    <SelectItem value="javascript" className="shad-select-item">
-                      JavaScript
-                    </SelectItem>
-                    <SelectItem value="reactjs" className="shad-select-item">
-                      React.js
-                    </SelectItem>
-                    <SelectItem value="nextjs" className="shad-select-item">
-                      Next.js
-                    </SelectItem>
+                    {categoriesNames.map((category) => (
+                      <SelectItem
+                        value={category}
+                        key={category}
+                        className="shad-select-item"
+                      >
+                        {category}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormControl>

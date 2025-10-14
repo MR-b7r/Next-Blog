@@ -9,10 +9,10 @@ const RecentPosts = async () => {
       <h1 className="text-3xl mt-5 font-semibold tracking-wide">
         Recent Blogs
       </h1>
-      <div className="flex flex-wrap gap-5 mt-5 justify-center">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 justify-center">
         {recentPosts &&
           recentPosts.map((post: Post) => (
-            <PostCard key={post._id} post={post} />
+            <PostCard key={post.id} post={post} />
           ))}
       </div>
     </div>

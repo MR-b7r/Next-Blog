@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   Select,
   SelectContent,
@@ -8,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,13 +17,14 @@ import { Form, FormControl, FormField } from "@/components/ui/form";
 import { filterschema } from "@/lib/utils";
 import { Input } from "./ui/input";
 import toast from "react-hot-toast";
+import { categoriesNames } from "@/lib/constants";
 
 const SearchFilter = () => {
   const pathName = usePathname();
   const router = useRouter();
 
   const formSchema = filterschema();
-  // 1. Define the form.
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,14 +47,8 @@ const SearchFilter = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="px-3 py-5">
-        <nav className="flex justify-between items-center ">
-          <div className="relative block ">
-            <div className="absolute inset-y-0  flex items-center ps-3 pointer-events-none">
-              <MagnifyingGlassIcon
-                type="button"
-                className="w-4 h-4 text-green-500"
-              />
-            </div>
+        <nav className="flex justify-end items-center max-md:flex-col gap-3">
+          <div className="relative block">
             <FormField
               control={form.control}
               name="searchTerm"
@@ -62,20 +56,18 @@ const SearchFilter = () => {
                 <FormControl>
                   <Input
                     type="text"
-                    className="block w-full p-2 ps-10 text-sm text-dark-400 border border-green-500 rounded-lg bg-gray-50 focus:ring-0 focus:border-green-500 outline-none dark:bg-dark-400 dark:border-gray-600 dark:placeholder-dark-400 dark:text-white dark:focus:ring-0 dark:focus:border-green-500"
+                    className=" text-dark-400  border bg-gray-50 outline-none dark:bg-dark-400 dark:border-gray-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-0 dark:focus:border-green-500
+                    py-3 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-green-500 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none  dark:focus:ring-neutral-600"
                     style={{ boxShadow: "none" }}
-                    placeholder="Search..."
+                    placeholder="Search Term"
                     {...field}
                   />
                 </FormControl>
               )}
             />
           </div>
-          {/* <h2 className="md:block hidden text-dark-500 dark:text-gray-100 text-3xl font-bold">
-            Search results
-          </h2> */}
 
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap max-md:flex-col">
             <ul className="flex flex-nowrap py-1">
               <FormField
                 control={form.control}
@@ -86,12 +78,16 @@ const SearchFilter = () => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-[180px] shad-select-trigger">
                         <SelectValue placeholder="Select the date" />
                       </SelectTrigger>
-                      <SelectContent className="flex flex-nowrap py-1">
-                        <SelectItem value="desc">Newest</SelectItem>
-                        <SelectItem value="asc">Oldest</SelectItem>
+                      <SelectContent className="shad-select-content">
+                        <SelectItem value="desc" className="shad-select-item">
+                          Newest
+                        </SelectItem>
+                        <SelectItem value="asc" className="shad-select-item">
+                          Oldest
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -109,14 +105,22 @@ const SearchFilter = () => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-[180px] shad-select-trigger">
                         <SelectValue placeholder="Select the date" />
                       </SelectTrigger>
-                      <SelectContent className="flex flex-nowrap py-1">
-                        <SelectItem value="all">All</SelectItem>
-                        <SelectItem value="javascript">Javascript</SelectItem>
-                        <SelectItem value="reactjs">ReactJs</SelectItem>
-                        <SelectItem value="nextjs">NextJs</SelectItem>
+                      <SelectContent className="shad-select-content">
+                        <SelectItem value="all" className="shad-select-item">
+                          All
+                        </SelectItem>
+                        {categoriesNames.map((category) => (
+                          <SelectItem
+                            value={category}
+                            key={category}
+                            className="shad-select-item"
+                          >
+                            {category}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </FormControl>

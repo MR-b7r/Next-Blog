@@ -3,7 +3,7 @@
 import Post from "@/models/post.model";
 import { connectMongo } from "../mongodb";
 import { handleError, parseStringify } from "../utils";
-import { postPerPage } from "../constants";
+import { categories, categoriesIcons, postPerPage } from "../constants";
 import User from "@/models/user.model";
 
 export const createPost = async (postData: CreatePost) => {
@@ -13,7 +13,7 @@ export const createPost = async (postData: CreatePost) => {
       return console.error("Please provide all required fields");
     }
     if (!postData.category) {
-      const category = "Uncategorized";
+      const category = "Other";
       postData.category = category;
     }
     const slug = postData.title
@@ -68,7 +68,7 @@ export const getAllPosts = async ({
   isAdmin,
   userId,
 }: {
-  pageNumber?: boolean;
+  pageNumber?: number;
   isAdmin?: boolean;
   userId?: string;
 }) => {
@@ -117,6 +117,16 @@ export const getAllPosts = async ({
 
     allPosts = { ...allPosts, lastMonthPosts, recentPosts };
     return parseStringify(allPosts);
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getTotalPosts = async () => {
+  try {
+    await connectMongo();
+    const totalPosts = await Post.countDocuments();
+    return totalPosts as number;
   } catch (error) {
     handleError(error);
   }
@@ -198,3 +208,67 @@ export const deletePost = async (postId: string) => {
     handleError(error);
   }
 };
+export const getAdminPosts = async () => {
+  try {
+    await connectMongo();
+    const admins = await User.find({ isAdmin: true });
+    const adminIds = admins.map((admin) => admin.id.toString());
+    const postsByAdmins = await Post.find({ userId: { $in: adminIds } })
+      .sort({ createdAt: -1 })
+      .limit(6);
+    return parseStringify(postsByAdmins);
+  } catch (error) {
+    handleError(error);
+  }
+};
+export const postByCategory = async ({
+  postId,
+  category,
+}: {
+  postId: string;
+  category: string;
+}) => {
+  try {
+    await connectMongo();
+    const categorizedPosts = await Post.find({
+      category: category,
+      id: { $ne: postId },
+    })
+      .sort({ createdAt: -1 })
+      .limit(6);
+    return parseStringify(categorizedPosts);
+  } catch (error) {
+    handleError(error);
+  }
+};
+export const categoryCount = async () => {
+  try {
+    const categoryCounts = await Post.aggregate([
+      { $group: { _id: "$category", count: { $sum: 1 } } },
+      { $project: { _id: 0, category: "$_id", count: 1 } },
+    ]);
+    const categories = Object.keys(categoriesIcons).map((name) => {
+      const matched = categoryCounts.find((c) => c.category === name);
+      return {
+        name,
+        icon: categoriesIcons[name],
+        count: matched ? matched.count : 0,
+      };
+    });
+    return parseStringify(categories);
+  } catch (error) {
+    handleError(error);
+  }
+};
+// export const incrementPostViews = async (postId: string) => {
+//   try {
+//     await connectMongo();
+//     const post = await Post.findById(postId);
+//     if (!post) return;
+//     post.views = (post.views || 0) + 1;
+//     await post.save();
+//     return parseStringify(post);
+//   } catch (error) {
+//     handleError(error);
+//   }
+// };
