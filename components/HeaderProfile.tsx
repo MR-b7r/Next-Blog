@@ -12,6 +12,8 @@ import Link from "next/link";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import SignoutUser from "./SignoutUser";
 import { auth } from "@/lib/auth";
+import { CrownIcon } from "lucide-react";
+import Image from "next/image";
 
 const HeaderProfile = async () => {
   const session = await auth();
@@ -25,9 +27,12 @@ const HeaderProfile = async () => {
           <DropdownMenuTrigger>
             {user?.profilePicture ? (
               <div className="flex items-center justify-center">
-                <img
+                <Image
+                  alt="My Picture"
                   src={user?.profilePicture}
-                  className="h-10 w-10 rounded-full object-cover"
+                  className=" rounded-full object-cover"
+                  width={40}
+                  height={40}
                 />
               </div>
             ) : (
@@ -35,8 +40,9 @@ const HeaderProfile = async () => {
             )}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="absolute top-0 -right-10 dark:bg-dark-200">
-            <DropdownMenuLabel className="!font-normal !text-[13px] text-dark-400 dark:text-gray-100">
+            <DropdownMenuLabel className="!font-normal !text-[13px] text-dark-400 dark:text-gray-100 flex items-center justify-between">
               {user?.username}
+              {user?.isAdmin && <CrownIcon className="size-5" />}
             </DropdownMenuLabel>
             <DropdownMenuLabel className="text-dark-300 dark:text-gray-50">
               {user?.email}

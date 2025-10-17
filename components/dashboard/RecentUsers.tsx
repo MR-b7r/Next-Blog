@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { formatDateTime } from "@/lib/utils";
+import Image from "next/image";
 
 export default function RecentUsers({ recentUsers }: { recentUsers: User[] }) {
   const filteredUsers = recentUsers.slice(0, 5);
@@ -50,12 +51,12 @@ export default function RecentUsers({ recentUsers }: { recentUsers: User[] }) {
                 <TableCell className="py-3">
                   <div className="flex items-center gap-3">
                     <div className="h-[50px] w-[50px] overflow-hidden rounded-md">
-                      <img
+                      <Image
+                        alt={user.username}
+                        src={user.profilePicture}
+                        className=" object-cover"
                         width={50}
                         height={50}
-                        src={user.profilePicture}
-                        className="w-20 h-10 object-cover"
-                        alt={user.username}
                       />
                     </div>
                   </div>

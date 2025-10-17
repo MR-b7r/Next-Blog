@@ -22,14 +22,14 @@ const page = async ({ params }: SearchParamProps) => {
         <CommentForm postId={post._id} />
       </SessionProvider>
       {comments?.map((comment: Message) => (
-        <Comment comment={comment} key={comment.id} />
+        <Comment comment={comment} key={comment._id} />
       ))}
 
       <FeaturedSection
         title={"Related Blogs"}
         postsByAdmins={false}
         category={post.category}
-        postId={post.id}
+        postId={post._id}
       />
     </section>
   );

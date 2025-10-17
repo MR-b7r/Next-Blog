@@ -102,7 +102,10 @@ const RenderInput = ({
       return (
         <div className="flex w-full flex-col">
           <FormControl>
-            <FileUploader onFieldChange={field.onChange} />
+            <FileUploader
+              onFieldChange={field.onChange}
+              isLoading={disabled!}
+            />
           </FormControl>
         </div>
       );

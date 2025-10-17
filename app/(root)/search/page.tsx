@@ -33,7 +33,7 @@ const page = async ({ searchParams }: { searchParams: searchFiterParams }) => {
           {filteredPosts?.length ? (
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 justify-center">
               {filteredPosts.map((post: Post) => (
-                <PostCard key={post.id} post={post} />
+                <PostCard key={post._id} post={post} />
               ))}
             </div>
           ) : (

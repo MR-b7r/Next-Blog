@@ -18,7 +18,7 @@ declare type User = {
   updatedAt?: Date;
 };
 declare type Post = {
-  id: string;
+  _id: string;
   userId: string;
   content: string;
   title: string;
@@ -30,7 +30,7 @@ declare type Post = {
   username: string;
 };
 declare type Message = {
-  id: string;
+  _id: string;
   comment: string;
   postId: string;
   userId: string;

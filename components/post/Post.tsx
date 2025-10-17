@@ -4,6 +4,7 @@ import React from "react";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { formatDateTime } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+import Image from "next/image";
 const Post = ({
   post,
   mdxSource,
@@ -23,10 +24,12 @@ const Post = ({
           <div className="flex justify-between items-center mb-6">
             <div className="flex w-full sm:items-center gap-x-5 sm:gap-x-3">
               <div className="shrink-0">
-                <img
-                  className="size-12 rounded-full object-cover"
-                  src={user?.profilePicture}
+                <Image
                   alt={user?.username}
+                  src={user?.profilePicture}
+                  className="rounded-full object-cover"
+                  width={48}
+                  height={48}
                 />
               </div>
 

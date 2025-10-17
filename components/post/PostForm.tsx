@@ -149,7 +149,10 @@ export function PostForm({
             name="image"
             render={({ field }) => (
               <FormControl>
-                <FileUploader onFieldChange={field.onChange} />
+                <FileUploader
+                  onFieldChange={field.onChange}
+                  isLoading={isLoading}
+                />
               </FormControl>
             )}
           />

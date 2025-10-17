@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import UserModal from "@/components/UserModal";
 import { SessionProvider } from "next-auth/react";
+import Image from "next/image";
 
 const page = async () => {
   const session = await auth();
@@ -15,9 +16,12 @@ const page = async () => {
     <div className="max-w-lg mx-auto p-6 w-full mb-5">
       <h1 className="dash-header">{user?.username}</h1>
       <div className="flex items-center justify-center my-4">
-        <img
+        <Image
+          alt="My Picture"
           src={user?.profilePicture}
-          className="h-12 w-12 rounded-full object-cover"
+          className=" rounded-full object-cover"
+          width={48}
+          height={48}
         />
       </div>
       <SessionProvider>
@@ -25,7 +29,7 @@ const page = async () => {
       </SessionProvider>
       <div className="flex items-center justify-between mt-5">
         <Link href={"dashboard/create-post"} className="w-fit">
-          <Button className="text-16 rounded-lg font-semibold text-gray-900 bg-gray-200 dark:text-white dark:bg-gray-800 hover:logo-gradient w-fit">
+          <Button className="" variant={"secondary"}>
             Create a Blog
           </Button>
         </Link>

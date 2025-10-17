@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import CommentHandler from "./CommentHandler";
+import Image from "next/image";
 
 const Comment = async ({ comment }: { comment: Message }) => {
   const session = await auth();
@@ -20,10 +21,12 @@ const Comment = async ({ comment }: { comment: Message }) => {
   return (
     <div className="flex p-4 border-b dark:border-gray-600 text-sm max-w-2xl mx-auto w-full ">
       <div className="flex-shrink-0 mr-3">
-        <img
-          className="w-10 h-10 rounded-full bg-gray-200 object-cover border border-green-500 "
-          src={getUser.profilePicture}
+        <Image
           alt={getUser.username}
+          src={getUser?.profilePicture}
+          className="w-10 h-10 rounded-full bg-gray-200 object-cover border border-green-500"
+          width={40}
+          height={40}
         />
       </div>
       <div className="flex-1">

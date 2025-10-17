@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   /* config options here */
   // reactStrictMode: false, //Disable strict mode
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+  images: {
+    domains: [
+      "utfs.io",
+      "lh3.googleusercontent.com",
+      "cdn.pixabay.com",
+      "www.hostinger.com",
+    ],
+  },
 };
 
 import createMDX from "@next/mdx";

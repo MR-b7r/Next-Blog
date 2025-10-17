@@ -1,18 +1,31 @@
+"use client";
+import React from "react";
 import { Button } from "@/components/ui/moving-border";
 import Link from "next/link";
 import * as motion from "motion/react-client";
 import { ArrowRight } from "lucide-react";
 import { Spotlight } from "../ui/spotlight";
-
+import Image from "next/image";
+import herosection from "@/public/hero-section.svg";
+import { useTheme } from "next-themes";
 const HeroSection = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   return (
-    <section className="min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section
+      className={`min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden`}
+    >
       <div className="overflow-hidden max-md:hidden">
         <Spotlight
-          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen "
           fill="white"
         />
-        <Spotlight className="left-80 top-28 h-[80vh] w-[50vw] " fill="green" />
+        {isDark && (
+          <Spotlight
+            className="left-80 top-28 h-[80vh] w-[50vw]"
+            fill="green"
+          />
+        )}
       </div>
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -60,10 +73,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="hidden lg:block"
           >
-            <div className="relative">
-              <div className="w-80 h-80 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl absolute -top-10 -right-10"></div>
-              <div className="w-96 h-96 bg-gradient-to-tl from-secondary/40 to-primary/40 rounded-2xl transform rotate-6 shadow-2xl"></div>
-            </div>
+            <Image src={herosection} alt="blog" />
           </motion.div>
         </div>
       </div>

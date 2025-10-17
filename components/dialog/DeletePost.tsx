@@ -31,12 +31,11 @@ const DeletePost = ({
   };
   return (
     <Button
-      variant="ghost"
+      variant="destructive"
       onClick={handleDeletePost}
       disabled={isLoading}
-      className={`capitalize 
-        text-red-500 hover:text-red-500
-       hover:bg-gray-200 dark:hover:bg-gray-700 `}
+      size={"sm"}
+      className={`capitalize`}
     >
       Delete
     </Button>

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import DeletePost from "../dialog/DeletePost";
+import { cn } from "@/lib/utils";
 
 const PostModal = ({
   postId,
@@ -39,7 +40,12 @@ const PostModal = ({
             {type}
           </Button>
         </DialogTrigger>
-        <DialogContent className="shad-dialog sm:max-w-md">
+        <DialogContent
+          className={cn(
+            "shad-dialog sm:max-w-md border-green-600",
+            type == "delete" && "!border-red-600"
+          )}
+        >
           <DialogHeader className="mb-4 space-y-3">
             <DialogTitle className="capitalize text-gray-900 dark:text-gray-100 flex items-center tracking-wide">
               {type} Blog
@@ -53,6 +59,7 @@ const PostModal = ({
             <DialogClose asChild>
               <Button
                 type="button"
+                size={"sm"}
                 variant="outline"
                 className="hover:bg-gray-200 dark:hover:bg-gray-700"
               >

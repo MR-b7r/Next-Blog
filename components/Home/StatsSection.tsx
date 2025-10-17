@@ -83,7 +83,7 @@ const StatsSection = async () => {
               </h4>
               <p className="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-green-500">
                 <CountingNumber
-                  number={totalComments}
+                  number={totalComments ?? 0}
                   inView={true}
                   transition={{ stiffness: 40, damping: 25 }}
                 />

@@ -5,12 +5,13 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "../ui/badge";
 import { ArrowRight, Calendar } from "lucide-react";
 import { formatDateTime } from "@/lib/utils";
+import Image from "next/image";
 
 const PostCard = ({ post }: { post: Post }) => {
   const { title, image, category, slug } = post;
   return (
     <motion.div
-      key={post.id}
+      key={post._id}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -19,11 +20,12 @@ const PostCard = ({ post }: { post: Post }) => {
       <Card className="group flex flex-col max-w-sm bg-gray-100 border border-gray-200 rounded-lg shadow dark:bg-dark-400 dark:border-gray-700 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-300 backdrop-blur-xs py-0">
         <CardHeader className="p-0">
           <div className="relative">
-            <div className="w-full h-[188px] relative">
-              <img
-                className="rounded-t-lg w-full max-h-[188px] h-full object-cover duration-200 group-hover:scale-[102%]"
-                src={image}
+            <div className="w-full h-[188px] relative overflow-hidden">
+              <Image
                 alt={title}
+                src={image}
+                className="rounded-t-lg object-cover duration-200 group-hover:scale-[102%]"
+                fill
               />
             </div>
 

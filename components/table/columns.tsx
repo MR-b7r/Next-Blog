@@ -5,6 +5,7 @@ import Link from "next/link";
 import PostModal from "../post/PostModal";
 import { Button } from "../ui/button";
 import { formatDateTime } from "@/lib/utils";
+import Image from "next/image";
 
 export const columns: ColumnDef<Post>[] = [
   {
@@ -21,10 +22,12 @@ export const columns: ColumnDef<Post>[] = [
     accessorKey: "postImage",
     header: "Post Image",
     cell: ({ row }) => (
-      <img
-        src={row.original.image}
+      <Image
         alt={row.original.title}
-        className="w-20 h-10 object-cover"
+        src={row.original.image}
+        className=" object-cover"
+        width={80}
+        height={40}
       />
     ),
   },
@@ -54,16 +57,17 @@ export const columns: ColumnDef<Post>[] = [
     header: () => <div className="pl-4">Actions</div>,
     cell: ({ row }) => {
       const post = row.original;
+      console.log(post);
       return (
         <div className="flex md:gap-1 items-center">
           <Button
             variant="ghost"
             className={`capitalize text-green-500 hover:text-green-500 tracking-wide hover:bg-green-200 dark:hover:bg-green-700 `}
           >
-            <Link href={`update-post/${post.id}`}>Edit</Link>
+            <Link href={`update-post/${post._id}`}>Edit</Link>
           </Button>
           <PostModal
-            postId={post.id}
+            postId={post._id}
             userId={post.userId}
             post={post}
             type="delete"

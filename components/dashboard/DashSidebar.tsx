@@ -9,7 +9,7 @@ import Link from "next/link";
 import SignoutUser from "../SignoutUser";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { LayoutDashboardIcon } from "lucide-react";
+import { Crown, LayoutDashboardIcon } from "lucide-react";
 
 const DashSidebar = async () => {
   const session = await auth();
@@ -26,8 +26,14 @@ const DashSidebar = async () => {
             >
               <UserIcon width={20} />
               <span className="ms-3">Profile</span>
-              <span className="inline-flex tracking-wide items-center justify-center px-2 ms-3 text-[12px] font-medium text-dark-500 bg-gray-200 rounded-full dark:bg-dark-500 dark:text-gray-200">
-                {user?.isAdmin ? "Admin" : "User"}
+              <span className="inline-flex tracking-wide items-center justify-center px-2 ms-3 text-[12px] font-medium text-dark-500 bg-green-300 rounded-full dark:bg-green-600 dark:text-gray-100">
+                {user?.isAdmin ? (
+                  <>
+                    Admin <Crown className="size-5 ml-1" />
+                  </>
+                ) : (
+                  "User"
+                )}
               </span>
             </Link>
           </li>

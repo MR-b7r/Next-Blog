@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
-import { ArrowDownIcon, ArrowUpIcon, PodcastIcon } from "lucide-react";
+import { PodcastIcon } from "lucide-react";
 import {
   ChatBubbleBottomCenterIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { CountingNumber } from "../ui/shadcn-io/counting-number";
-import { Badge } from "../ui/badge";
 
 export const EcommerceMetrics = ({
   totalUsers,
@@ -37,10 +36,6 @@ export const EcommerceMetrics = ({
               />
             </h4>
           </div>
-          <Badge variant={"default"}>
-            <ArrowUpIcon className="size-4" />
-            11.01%
-          </Badge>
         </div>
       </div>
       <div className="rounded-2xl border border-gray-300 bg-gray-50 p-5 dark:border-gray-500 dark:bg-dark-200 md:p-6">
@@ -60,11 +55,6 @@ export const EcommerceMetrics = ({
               />
             </h4>
           </div>
-
-          <Badge variant={"destructive"}>
-            <ArrowDownIcon className="size-4" />
-            9.05%
-          </Badge>
         </div>
       </div>
 
@@ -85,11 +75,6 @@ export const EcommerceMetrics = ({
               />
             </h4>
           </div>
-
-          <Badge variant={"destructive"}>
-            <ArrowDownIcon className="size-4" />
-            9.05%
-          </Badge>
         </div>
       </div>
     </div>

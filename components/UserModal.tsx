@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import DeleteUser from "./DeleteUser";
+import { SessionProvider } from "next-auth/react";
 
 const UserModal = ({
   userId,
@@ -25,22 +26,17 @@ const UserModal = ({
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button
-            variant={"ghost"}
-            className={`capitalize 
-              " text-red-500 hover:text-gray-100 
-             tracking-wide hover:bg-red-400 dark:hover:bg-red-800 `}
-          >
+          <Button variant={"destructive"} className={`capitalize`}>
             Delete
           </Button>
         </DialogTrigger>
-        <DialogContent className="shad-dialog sm:max-w-md">
+        <DialogContent className={"shad-dialog sm:max-w-md border-red-600"}>
           <DialogHeader className="mb-4 space-y-3">
             <DialogTitle className="capitalize text-gray-900 dark:text-gray-100 flex items-center tracking-wide">
               Delete {username}
             </DialogTitle>
             <DialogDescription className="text-gray-800 dark:text-gray-200">
-              Are you sure you want to delete{" "}
+              Are you sure you want to delete your account{" "}
               <span className="text-red-500 font-bold">{username}</span> ?
             </DialogDescription>
           </DialogHeader>
@@ -49,13 +45,16 @@ const UserModal = ({
             <DialogClose asChild>
               <Button
                 type="button"
+                size={"sm"}
                 variant="outline"
                 className="hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 Cancel
               </Button>
             </DialogClose>
-            <DeleteUser userId={userId} setOpen={setOpen} />
+            <SessionProvider>
+              <DeleteUser userId={userId} setOpen={setOpen} />
+            </SessionProvider>
           </DialogFooter>
         </DialogContent>
       </Dialog>

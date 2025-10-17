@@ -34,7 +34,7 @@ const page = async () => {
         totalComments={totalComments ?? 0}
       />
       <StatisticChart statistics={statistics} />
-      <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-6">
+      <div className="flex flex-col md:flex-row md:flex-wrap justify-center md:items-center gap-6">
         <RecentUsers recentUsers={users} />
         <RecentPosts recentPosts={recentPosts} />
         <RecentComments recentComments={recentComments} />

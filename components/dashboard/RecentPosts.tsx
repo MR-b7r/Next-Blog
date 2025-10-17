@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import Image from "next/image";
 
 export default function RecentPosts({ recentPosts }: { recentPosts: Post[] }) {
   const filteredPosts = recentPosts.slice(0, 5);
@@ -52,12 +53,12 @@ export default function RecentPosts({ recentPosts }: { recentPosts: Post[] }) {
                     href={`/post/${post.slug}`}
                   >
                     <div className="h-[50px] w-[50px] overflow-hidden rounded-md">
-                      <img
+                      <Image
+                        alt={post.title}
+                        src={post.image}
+                        className=" h-full object-contain"
                         width={50}
                         height={50}
-                        src={post.image}
-                        className="w-20 h-10 object-cover"
-                        alt={post.title}
                       />
                     </div>
                   </Link>

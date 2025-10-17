@@ -14,6 +14,7 @@ import { FormFieldType } from "../AuthForm";
 import toast from "react-hot-toast";
 import { createComment } from "@/lib/actions/comment.actions";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const CommentForm = ({ postId }: { postId: string }) => {
   const { data: session } = useSession();
@@ -56,11 +57,14 @@ const CommentForm = ({ postId }: { postId: string }) => {
         <>
           <div className="flex items-center gap-1 my-5 text-dark-300 dark:text-gray-100 text-sm">
             <p>Signed in as:</p>
-            <img
-              className="h-6 w-6 object-cover rounded-full"
-              src={user.profilePicture}
-              alt="profile Photo"
+            <Image
+              alt="My Picture"
+              src={user?.profilePicture}
+              className="rounded-full object-cover"
+              width={24}
+              height={24}
             />
+
             <Link
               href={"/dashboard"}
               className="text-xs text-green-500 hover:underline"

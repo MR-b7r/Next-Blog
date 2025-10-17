@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import UserModal from "../UserModal";
 import { formatDateTime } from "@/lib/utils";
+import Image from "next/image";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -20,10 +21,12 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "userImage",
     header: "User image",
     cell: ({ row }) => (
-      <img
-        src={row.original.profilePicture}
+      <Image
         alt={row.original.username}
-        className="w-10 h-10 object-cover rounded-full"
+        src={row.original.profilePicture}
+        className=" rounded-full object-cover"
+        width={40}
+        height={40}
       />
     ),
   },
@@ -63,9 +66,10 @@ export const columns: ColumnDef<User>[] = [
     header: () => <div className="pl-4">Delete</div>,
     cell: ({ row }) => {
       const user = row.original;
+      console.log("column", user);
       return (
         <div className="flex md:gap-1 items-center ">
-          <UserModal userId={user.id} username={user.username} />
+          <UserModal userId={user._id} username={user.username} />
         </div>
       );
     },
