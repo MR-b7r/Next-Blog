@@ -3,7 +3,7 @@
 import { authFormSchema } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,7 @@ export enum FormFieldType {
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const formSchema = authFormSchema(type);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,6 +40,7 @@ const AuthForm = ({ type }: { type: string }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      setIsLoading(true);
       // Sign up
       if (type === "sign-up") {
         const userData = {
@@ -68,8 +70,12 @@ const AuthForm = ({ type }: { type: string }) => {
         router.refresh();
         router.push("/");
       }
+      setIsLoading(false);
     } catch (error: any) {
+      setIsLoading(false);
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -123,7 +129,7 @@ const AuthForm = ({ type }: { type: string }) => {
                   type="submit"
                   className="text-16 rounded-lg  logo-gradient font-semibold text-white"
                 >
-                  {false ? (
+                  {isLoading ? (
                     <>
                       <Loader2 size={20} className="animate-spin" /> &nbsp;
                       Loading...

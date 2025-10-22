@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
+import { cn, constructMetadata } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "react-hot-toast";
 const poppins = Poppins({
@@ -12,11 +11,7 @@ const poppins = Poppins({
   adjustFontFallback: false,
 });
 
-export const metadata: Metadata = {
-  title: "DEV Blog",
-  description:
-    "A Blog Website to discuss everything new in the Developers community.",
-};
+export const metadata = constructMetadata();
 
 export default function RootLayout({
   children,

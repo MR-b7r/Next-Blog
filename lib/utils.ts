@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 import qs from "query-string";
+import { Metadata } from "next";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -178,4 +179,27 @@ export function formUrlQuery({ params, key, value }: UrlQueryParams) {
     },
     { skipNull: true }
   );
+}
+export function constructMetadata({
+  title = "NextBlog",
+  description = "Read insightful articles about web development, design, and technology — all in one place.",
+  image = "/thumbnail.png",
+  icons = "/favicon.ico",
+}: {
+  title?: string;
+  description?: string;
+  image?: string;
+  icons?: string;
+} = {}): Metadata {
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [{ url: image }],
+    },
+    icons,
+    metadataBase: new URL("https://nextblog.vercel.app/"),
+  };
 }

@@ -45,7 +45,7 @@ const FeaturedSection = async ({
           )}
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 justify-center">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 md:justify-center">
           {posts.map((post: Post) => (
             <PostCard key={post._id} post={post} />
           ))}
