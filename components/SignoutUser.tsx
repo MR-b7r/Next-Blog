@@ -4,13 +4,16 @@ import { userSignOut } from "@/lib/actions/user.actions";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signOut } from "@/lib/auth";
 
 const SignoutUser = ({ icon, style }: { icon?: boolean; style?: string }) => {
   const router = useRouter();
 
   const handleSignOut = async () => {
     try {
-      userSignOut();
+      // userSignOut();
+      await signOut({ redirect: false });
+
       router.push("/");
       router.refresh();
     } catch (error) {
