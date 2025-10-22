@@ -200,6 +200,6 @@ export function constructMetadata({
       images: [{ url: image }],
     },
     icons,
-    metadataBase: new URL("https://nextblog.vercel.app/"),
+    metadataBase: new URL("https://nextdev-blog.vercel.app/"),
   };
 }
