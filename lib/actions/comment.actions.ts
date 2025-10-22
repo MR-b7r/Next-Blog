@@ -116,7 +116,6 @@ export const likeComment = async ({
       return console.error("Comment not found");
     }
     const userIndex = comment.likes.indexOf(userId);
-    console.log(userIndex);
     if (userIndex === -1) {
       comment.numberOfLikes += 1;
       comment.likes.push(comment.userId);
@@ -125,7 +124,6 @@ export const likeComment = async ({
       comment.likes.splice(userIndex, 1);
     }
     const updatedComment = await comment.save();
-    console.log(updatedComment);
     return parseStringify(updatedComment);
   } catch (error) {
     handleError(error);

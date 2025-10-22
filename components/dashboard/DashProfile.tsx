@@ -17,7 +17,6 @@ import { useSession } from "next-auth/react";
 const DashProfile = () => {
   const { data: session, update } = useSession();
   const user = session?.user;
-  console.log(user);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const formSchema = updateProfile();

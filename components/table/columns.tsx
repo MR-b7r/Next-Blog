@@ -57,7 +57,6 @@ export const columns: ColumnDef<Post>[] = [
     header: () => <div className="pl-4">Actions</div>,
     cell: ({ row }) => {
       const post = row.original;
-      console.log(post);
       return (
         <div className="flex md:gap-1 items-center">
           <Button

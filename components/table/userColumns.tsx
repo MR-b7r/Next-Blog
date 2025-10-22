@@ -66,7 +66,6 @@ export const columns: ColumnDef<User>[] = [
     header: () => <div className="pl-4">Delete</div>,
     cell: ({ row }) => {
       const user = row.original;
-      console.log("column", user);
       return (
         <div className="flex md:gap-1 items-center ">
           <UserModal userId={user._id} username={user.username} />

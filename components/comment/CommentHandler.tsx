@@ -16,9 +16,8 @@ const CommentHandler = ({
 
   const handleLikeComment = async (commentId: string) => {
     if (!commentId && !user.id) return;
-    const comment = await likeComment({ commentId, userId: user.id });
+    await likeComment({ commentId, userId: user.id });
     router.refresh();
-    console.log(comment);
   };
   return (
     <div className="flex items-center pt-1 text-xs border-t dark:border-gray-700 max-w-fit gap-2">

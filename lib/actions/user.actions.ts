@@ -65,21 +65,8 @@ export const userSignIn = async (user: SignInParams, auth = false) => {
 };
 export const userSignOut = async () => {
   try {
+    await connectMongo();
     await signOut({ redirectTo: "/" });
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const google = async () => {
-  try {
-    await signIn("google", { redirect: true });
-    const session = (await auth()) as Session;
-    const email = session?.user?.email;
-    if (!email) throw new Error("No email found in session");
-    const getUser = await User.findOne({ email });
-    if (!getUser) return console.error("Error with your Google account");
-    return parseStringify(getUser);
   } catch (error) {
     throw error;
   }
